@@ -11,7 +11,9 @@
         $seoTitle = ($seo?->meta_title ?: null) ?: trim($__env->yieldContent('title', '楷懿國際投資 | Kaiyi International Investment'));
         $seoDesc = ($seo?->meta_description ?: null) ?: trim($__env->yieldContent('meta_description', '楷懿國際投資專注工業地產、不動產代理與專業諮詢，深耕越南河內、海防市場，提供工業區開發招商、包租代管與跨國不動產投資服務。'));
         $seoKeywords = ($seo?->meta_keywords ?: null) ?: trim($__env->yieldContent('meta_keywords', '楷懿國際投資,越南不動產,工業地產,工業區開發招商,包租代管,不動產代理,越南房地產投資,河內,海防'));
-        $seoRobots = ($seo?->meta_robots ?: null) ?: 'index, follow, max-image-preview:large';
+        $seoRobots = \App\Support\Seo::noindexSite()
+            ? 'noindex, nofollow'
+            : (($seo?->meta_robots ?: null) ?: 'index, follow, max-image-preview:large');
         $seoCanonical = ($seo?->canonical_url ?: null) ?: url()->current();
         $ogTitle = ($seo?->og_title ?: null) ?: trim($__env->yieldContent('og_title', $seoTitle));
         $ogDesc = ($seo?->og_description ?: null) ?: trim($__env->yieldContent('og_description', $seoDesc));
@@ -46,6 +48,13 @@
     <meta name="twitter:title" content="{{ $twTitle }}">
     <meta name="twitter:description" content="{{ $twDesc }}">
     <meta name="twitter:image" content="{{ $twImage }}">
+    @if($twSite = \App\Support\Seo::twitterSite())
+    <meta name="twitter:site" content="{{ $twSite }}">
+    <meta name="twitter:creator" content="{{ $twSite }}">
+    @endif
+
+    {{-- 搜尋引擎驗證 + 分析追蹤（GA4/GTM）--}}
+    @include('frontend.partials.tracking')
 
     {{-- 其他 --}}
     <meta name="theme-color" content="#0A0A0A">
@@ -67,6 +76,10 @@
 </head>
 
 <body>
+    @if($gtmId = \App\Support\Seo::gtmId())
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    @endif
+
     {{-- Page Loader --}}
     <div class="page-loader">
         <div class="loader-logo">KAIYI</div>
@@ -91,11 +104,15 @@
     <script src="{{ asset('assets/js/main.js') }}?v=20260605"></script>
     @stack('page-js')
 
-    {{-- Structured Data (JSON-LD)：頁面靜態基準 + 後台每頁每語系可編輯的補充 --}}
-    @stack('structured-data')
+    {{-- 結構化資料（JSON-LD / GEO·AEO）：由 SchemaService 依頁面+語系動態產生
+         （Organization/WebSite/Breadcrumb/頁型/FAQ）；後台每頁每語系的 schema_org 作為額外補充 --}}
+    @foreach(\App\Support\SchemaService::forPage(current_page_key() ?? 'home') as $schema)
+    <script type="application/ld+json">{!! json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+    @endforeach
     @if($seo && $seo->schema_org)
     <script type="application/ld+json">{!! $seo->schema_org_json !!}</script>
     @endif
+    @stack('structured-data')
 </body>
 
 </html>

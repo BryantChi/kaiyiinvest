@@ -65,11 +65,11 @@
                 <p class="card-text text-muted">
                     搜尋引擎優化、Meta 標籤、社群媒體、驗證碼
                 </p>
-                <a href="{{ route('admin.settings.seo') }}" class="btn btn-outline-success w-100">
+                <a href="{{ route('admin.seo.settings') }}" class="btn btn-outline-success w-100">
                     <svg class="icon me-2">
                         <use xlink:href="/assets/icons/free.svg#cil-arrow-right"></use>
                     </svg>
-                    前往設定
+                    前往 SEO 管理
                 </a>
             </div>
         </div>

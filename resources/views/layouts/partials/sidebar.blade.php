@@ -157,27 +157,33 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_route('admin.seo.settings') }}" href="{{ route('admin.seo.settings') }}">
+                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                    網站設定
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_route('admin.seo.pages') }}" href="{{ route('admin.seo.pages') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
                     頁面 SEO
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.seo.meta') }}" href="{{ route('admin.seo.meta') }}">
+                <a class="nav-link {{ active_route('admin.seo.sitemap') }}" href="{{ route('admin.seo.sitemap') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Meta 管理
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.seo.sitemap-settings') }}" href="{{ route('admin.seo.sitemap-settings') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Sitemap 設定
+                    Sitemap
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ active_route('admin.seo.robots-txt') }}" href="{{ route('admin.seo.robots-txt') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Robots.txt
+                    robots.txt
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_route('admin.seo.llms-txt') }}" href="{{ route('admin.seo.llms-txt') }}">
+                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                    llms.txt
                 </a>
             </li>
             <li class="nav-item">
@@ -212,12 +218,6 @@
                 <a class="nav-link {{ active_route('admin.settings.general') }}" href="{{ route('admin.settings.general') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
                     一般設定
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    SEO 設定
                 </a>
             </li>
             <li class="nav-item">

@@ -81,20 +81,28 @@ Route::prefix(config('admin.prefix', 'admin'))
         Route::prefix('seo')->name('seo.')->group(function () {
             Route::get('/', [SeoController::class, 'index'])->name('index');
 
+            // 網站 SEO 設定（GA4 / GTM / 驗證碼 / 預設值）
+            Route::get('/settings', [SeoController::class, 'settings'])->name('settings');
+            Route::put('/settings', [SeoController::class, 'updateSettings'])->name('settings.update');
+
             // 頁面 SEO（每頁每語系 Meta / OG / Twitter / JSON-LD）
             Route::get('/pages', [PageSeoController::class, 'index'])->name('pages');
             Route::get('/pages/{pageKey}', [PageSeoController::class, 'edit'])->name('pages.edit');
             Route::put('/pages/{pageKey}', [PageSeoController::class, 'update'])->name('pages.update');
-            Route::get('/meta', [SeoController::class, 'meta'])->name('meta');
-            Route::get('/meta/{seoMeta}/edit', [SeoController::class, 'editMeta'])->name('meta.edit');
-            Route::put('/meta/{seoMeta}', [SeoController::class, 'updateMeta'])->name('meta.update');
-            Route::post('/generate-sitemap', [SeoController::class, 'generateSitemap'])->name('generate-sitemap');
-            Route::get('/sitemap-settings', [SeoController::class, 'sitemapSettings'])->name('sitemap-settings');
-            Route::put('/sitemap-settings', [SeoController::class, 'updateSitemapSettings'])->name('sitemap-settings.update');
-            Route::get('/robots-txt', [SeoController::class, 'robotsTxt'])->name('robots-txt')->defaults('view', 'admin.seo.robots-txt-simple');
+
+            // Sitemap（動態；提供資訊 + 通知搜尋引擎）
+            Route::get('/sitemap', [SeoController::class, 'sitemap'])->name('sitemap');
+            Route::post('/sitemap/ping', [SeoController::class, 'pingSitemap'])->name('sitemap.ping');
+
+            // robots.txt / llms.txt（存 Setting，由前台動態路由輸出）
+            Route::get('/robots-txt', [SeoController::class, 'robotsTxt'])->name('robots-txt');
             Route::put('/robots-txt', [SeoController::class, 'updateRobotsTxt'])->name('robots-txt.update');
-            Route::post('/generate-missing', [SeoController::class, 'generateMissingSeoMeta'])->name('generate-missing');
+            Route::get('/llms-txt', [SeoController::class, 'llmsTxt'])->name('llms-txt');
+            Route::put('/llms-txt', [SeoController::class, 'updateLlmsTxt'])->name('llms-txt.update');
+
+            // SEO 分析
             Route::get('/analyze', [SeoController::class, 'analyze'])->name('analyze');
+            Route::post('/generate-missing', [SeoController::class, 'generateMissingSeoMeta'])->name('generate-missing');
         });
 
         // 系統設定
@@ -105,9 +113,8 @@ Route::prefix(config('admin.prefix', 'admin'))
             Route::get('/general', [SettingController::class, 'general'])->name('general');
             Route::put('/general', [SettingController::class, 'updateGeneral'])->name('general.update');
 
-            // SEO 設定
-            Route::get('/seo', [SettingController::class, 'seo'])->name('seo');
-            Route::put('/seo', [SettingController::class, 'updateSeo'])->name('seo.update');
+            // SEO 設定已整合至「SEO 管理 → 網站設定」；此處保留轉址避免舊連結失效
+            Route::get('/seo', fn () => redirect()->route('admin.seo.settings'))->name('seo');
 
             // 分析設定
             Route::get('/analytics', [SettingController::class, 'analytics'])->name('analytics');

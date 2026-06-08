@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContentBlock;
 use App\Models\Page;
+use App\Models\SeoMeta;
 use App\Support\LocaleService;
+use App\Support\Seo;
 use Illuminate\Http\Response;
 
 class SitemapController extends Controller
@@ -17,6 +20,11 @@ class SitemapController extends Controller
         $pages = Page::active()->ordered()->get();
         $locales = LocaleService::all();
 
+        // 每頁 lastmod：取該頁內容區塊 / SEO Meta / 頁面本身更新時間的最大值
+        $blockUpdated = ContentBlock::selectRaw('page, MAX(updated_at) as u')->groupBy('page')->pluck('u', 'page');
+        $seoUpdated = SeoMeta::where('model_type', Page::class)
+            ->selectRaw('model_id, MAX(updated_at) as u')->groupBy('model_id')->pluck('u', 'model_id');
+
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
 
@@ -26,10 +34,21 @@ class SitemapController extends Controller
                 continue;
             }
 
+            // lastmod
+            $times = array_filter([
+                $page->updated_at,
+                $blockUpdated[$page->key] ?? null,
+                $seoUpdated[$page->id] ?? null,
+            ]);
+            $lastmod = $times ? \Illuminate\Support\Carbon::parse(max($times))->toAtomString() : null;
+
             foreach ($locales as $loc) {
                 $url = localized_route($routeName, [], $loc->code);
                 $xml .= "  <url>\n";
                 $xml .= '    <loc>' . htmlspecialchars($url, ENT_XML1) . "</loc>\n";
+                if ($lastmod) {
+                    $xml .= '    <lastmod>' . $lastmod . "</lastmod>\n";
+                }
 
                 // hreflang alternates
                 foreach ($locales as $alt) {
@@ -56,47 +75,15 @@ class SitemapController extends Controller
      */
     public function robots(): Response
     {
-        $custom = setting('robots_txt');
-
-        // 注意：不在 robots 列出後台路徑（避免洩漏自訂的後台網址）；後台本身已需登入。
-        $content = $custom ?: "User-agent: *\nDisallow: /api\n\nSitemap: " . url('/sitemap.xml') . "\n";
-
-        return response($content, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+        // 由後台「網站 SEO 設定」覆寫；不在 robots 列出後台路徑（避免洩漏自訂後台網址）。
+        return response(Seo::robotsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
     }
 
     /**
-     * llms.txt（AEO）：可由設定覆寫，預設提供公司與服務摘要。
+     * llms.txt（AEO）：由後台覆寫，預設提供豐富的公司與服務摘要。
      */
     public function llms(): Response
     {
-        $custom = setting('llms_txt');
-
-        $default = <<<TXT
-# 楷懿國際投資 Kaiyi International Investment
-
-> 專注工業地產、不動產代理與專業諮詢，深耕越南河內、海防市場，提供工業區開發招商、包租代管與跨國不動產投資服務。
-
-## 服務項目
-- 不動產代理
-- 工業地產 / 工業區開發招商
-- 包租代管
-- 專業諮詢
-
-## 聯絡
-- 台灣：+886 987-773-519
-- 越南：+84 768-168-989
-- Email：kaiyiinvest@gmail.com
-
-## 網站
-- 首頁：{$this->siteUrl()}
-- 多語版本：zh-TW（預設）、en、vi
-TXT;
-
-        return response($custom ?: $default, 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
-    }
-
-    protected function siteUrl(): string
-    {
-        return url('/');
+        return response(Seo::llmsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
     }
 }
