@@ -78,7 +78,7 @@ class ArticleController extends Controller
             'meta_keywords' => 'nullable|string',
         ]);
 
-        $article = Article::create($validated);
+        $article = Article::create(collect($validated)->except(['meta_title', 'meta_description', 'meta_keywords', 'tags'])->all());
 
         // 同步標籤
         if (!empty($validated['tags'])) {
@@ -90,8 +90,8 @@ class ArticleController extends Controller
             }
         }
 
-        // 生成 SEO Meta
-        $article->generateSeoMeta();
+        // SEO Meta 統一存於多態 SeoMeta（與頁面一致）
+        $this->saveArticleSeo($article, $validated);
 
         flash_success('文章建立成功');
 
@@ -142,7 +142,7 @@ class ArticleController extends Controller
             'meta_keywords' => 'nullable|string',
         ]);
 
-        $article->update($validated);
+        $article->update(collect($validated)->except(['meta_title', 'meta_description', 'meta_keywords', 'tags'])->all());
 
         // 同步標籤
         $oldTags = $article->tags->pluck('id')->toArray();
@@ -158,9 +158,32 @@ class ArticleController extends Controller
             Tag::find($tagId)?->incrementCount();
         }
 
+        // SEO Meta（多態 SeoMeta）
+        $this->saveArticleSeo($article, $validated);
+
         flash_success('文章更新成功');
 
         return redirect()->route('admin.articles.index');
+    }
+
+    /**
+     * 文章 SEO 統一存於多態 SeoMeta（預設語系）；表單未填則自動生成。
+     */
+    protected function saveArticleSeo(Article $article, array $data): void
+    {
+        $seo = array_filter([
+            'meta_title' => $data['meta_title'] ?? null,
+            'meta_description' => $data['meta_description'] ?? null,
+            'meta_keywords' => $data['meta_keywords'] ?? null,
+        ], fn ($v) => $v !== null && $v !== '');
+
+        if (empty($seo)) {
+            $article->generateSeoMeta();
+            return;
+        }
+
+        $locale = \App\Support\LocaleService::default();
+        $article->seoMeta()->updateOrCreate(['locale' => $locale], $seo + ['locale' => $locale]);
     }
 
     /**

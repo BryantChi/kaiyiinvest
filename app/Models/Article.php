@@ -30,9 +30,6 @@ class Article extends Model implements HasMedia
         'published_at',
         'views_count',
         'likes_count',
-        'meta_title',
-        'meta_description',
-        'meta_keywords',
         'is_featured',
         'allow_comments',
         'order',
@@ -174,17 +171,27 @@ class Article extends Model implements HasMedia
      */
     public function generateSeoMeta(): void
     {
-        if (!$this->seoMeta) {
-            $this->seoMeta()->create([
-                'meta_title' => $this->title,
-                'meta_description' => $this->generateMetaDescription(),
-                'meta_keywords' => $this->generateMetaKeywords(),
-                'og_title' => $this->title,
-                'og_description' => $this->generateMetaDescription(),
-                'og_image' => $this->featured_image,
-                'canonical_url' => route('articles.show', $this),
-            ]);
+        if ($this->seoMeta) {
+            return;
         }
+
+        $locale = \App\Support\LocaleService::default();
+
+        // 前台文章頁尚未建立時不硬塞 canonical（避免 RouteNotFoundException）
+        $canonical = \Illuminate\Support\Facades\Route::has('frontend.news.show')
+            ? route('frontend.news.show', $this->slug)
+            : null;
+
+        $this->seoMeta()->create([
+            'locale' => $locale,
+            'meta_title' => $this->title,
+            'meta_description' => $this->generateMetaDescription(),
+            'meta_keywords' => $this->generateMetaKeywords(),
+            'og_title' => $this->title,
+            'og_description' => $this->generateMetaDescription(),
+            'og_image' => $this->featured_image,
+            'canonical_url' => $canonical,
+        ]);
     }
 
     /**
