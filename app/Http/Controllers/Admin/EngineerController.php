@@ -30,7 +30,7 @@ class EngineerController extends Controller
             'php' => PHP_VERSION,
             'env' => app()->environment(),
             'debug' => config('app.debug') ? '開啟' : '關閉',
-            'maxmind_key' => filled(env('MAXMIND_LICENSE_KEY')),
+            'maxmind_key' => filled(config('geoip.license_key')),
             'geoip_db' => $dbPath && file_exists($dbPath),
             'maintenance' => app()->isDownForMaintenance(),
         ];

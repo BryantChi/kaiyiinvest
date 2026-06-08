@@ -50,7 +50,7 @@ class Seo
 
     public static function ga4Id(): ?string
     {
-        return self::get('ga4_id') ?: env('GA_TRACKING_ID') ?: null;
+        return self::get('ga4_id') ?: config('analytics.google.tracking_id') ?: null;
     }
 
     public static function gtmId(): ?string
