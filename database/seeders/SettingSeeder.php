@@ -78,52 +78,9 @@ class SettingSeeder extends Seeder
                 'is_editable' => true,
             ],
 
-            // SEO 設定
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_title',
-                'value' => config('app.name'),
-                'type' => 'string',
-                'description' => 'SEO 預設標題',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_description',
-                'value' => '一個通用的後台管理系統',
-                'type' => 'string',
-                'description' => 'SEO 預設描述',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_keywords',
-                'value' => 'laravel, admin, cms',
-                'type' => 'string',
-                'description' => 'SEO 預設關鍵字',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_sitemap_enabled',
-                'value' => 'true',
-                'type' => 'boolean',
-                'description' => '啟用 Sitemap',
-                'is_public' => false,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_robots_enabled',
-                'value' => 'true',
-                'type' => 'boolean',
-                'description' => '啟用 Robots.txt',
-                'is_public' => false,
-                'is_editable' => true,
-            ],
+            // SEO 設定：改由專屬的 SeoSeeder 負責（group 'seo'，key 形如 seo.xxx，
+            // 對齊 App\Support\Seo 與後台「SEO 管理 → 網站設定」實際讀寫的 key）。
+            // 原本此處的 seo_* 底線 key 程式讀不到，已移除避免雙軌與混淆。
 
             // 分析設定
             [

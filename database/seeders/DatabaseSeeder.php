@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             LocaleSeeder::class,
             PageSeeder::class,
             FaqSeeder::class,
+            // SEO/GEO/AEO（需 Page + Locale 先建立）
+            SeoSeeder::class,
         ]);
 
         $this->command->info('');
