@@ -24,6 +24,9 @@ class SitemapController extends Controller
             \Illuminate\Support\Facades\URL::forceScheme('https');
         }
 
+        // 首頁（根網址）補上結尾斜線，使其為完整 URL 並與 canonical 一致
+        $norm = fn (string $u) => $u === $base ? $base . '/' : $u;
+
         $pages = Page::active()->ordered()->get();
         $locales = LocaleService::all();
 
@@ -50,22 +53,22 @@ class SitemapController extends Controller
             $lastmod = $times ? \Illuminate\Support\Carbon::parse(max($times))->toAtomString() : null;
 
             foreach ($locales as $loc) {
-                $url = localized_route($routeName, [], $loc->code);
+                $url = $norm(localized_route($routeName, [], $loc->code));
                 $xml .= "  <url>\n";
                 $xml .= '    <loc>' . htmlspecialchars($url, ENT_XML1) . "</loc>\n";
-                if ($lastmod) {
-                    $xml .= '    <lastmod>' . $lastmod . "</lastmod>\n";
-                }
 
-                // hreflang alternates
+                // hreflang alternates（緊接 loc，符合 Google 範例）
                 foreach ($locales as $alt) {
-                    $altUrl = localized_route($routeName, [], $alt->code);
+                    $altUrl = $norm(localized_route($routeName, [], $alt->code));
                     $xml .= '    <xhtml:link rel="alternate" hreflang="' . $alt->code . '" href="' . htmlspecialchars($altUrl, ENT_XML1) . "\"/>\n";
                     if ($alt->is_default) {
                         $xml .= '    <xhtml:link rel="alternate" hreflang="x-default" href="' . htmlspecialchars($altUrl, ENT_XML1) . "\"/>\n";
                     }
                 }
 
+                if ($lastmod) {
+                    $xml .= '    <lastmod>' . $lastmod . "</lastmod>\n";
+                }
                 $xml .= "    <changefreq>weekly</changefreq>\n";
                 $xml .= '    <priority>' . ($page->key === 'home' ? '1.0' : '0.8') . "</priority>\n";
                 $xml .= "  </url>\n";
