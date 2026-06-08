@@ -256,3 +256,34 @@
 <div class="sidebar-footer">
     <button class="sidebar-toggler" type="button"></button>
 </div>
+
+{{-- 自動捲動側邊欄至目前頁面對應的項目（並展開其所在群組） --}}
+<script>
+(function () {
+    function focusActive() {
+        var active = document.querySelector('.sidebar-nav .nav-link.active');
+        if (!active) return;
+
+        // 展開所在的 nav-group（SEO / 系統設定等）
+        var group = active.closest('.nav-group');
+        if (group) group.classList.add('show');
+
+        // 找最近的可捲動祖先（simplebar 包裝層或 sidebar 本身）
+        var el = active.parentElement, scroller = null;
+        while (el && el !== document.body) {
+            var oy = getComputedStyle(el).overflowY;
+            if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 4) { scroller = el; break; }
+            el = el.parentElement;
+        }
+        if (!scroller) return;
+
+        var sRect = scroller.getBoundingClientRect();
+        var aRect = active.getBoundingClientRect();
+        // 已在可視範圍內就不動
+        if (aRect.top >= sRect.top && aRect.bottom <= sRect.bottom) return;
+        scroller.scrollTop += (aRect.top - sRect.top) - (scroller.clientHeight / 2) + (aRect.height / 2);
+    }
+    // 等 simplebar 初始化與群組展開後再捲動
+    window.addEventListener('load', function () { setTimeout(focusActive, 150); });
+})();
+</script>
