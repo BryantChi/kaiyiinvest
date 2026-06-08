@@ -36,6 +36,8 @@ class SitemapController extends Controller
             ->selectRaw('model_id, MAX(updated_at) as u')->groupBy('model_id')->pluck('u', 'model_id');
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+        // XSL 樣式表：讓瀏覽器把 sitemap 顯示為美觀表格（搜尋引擎讀到的仍是同一份 XML）
+        $xml .= '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">' . "\n";
 
         foreach ($pages as $page) {
@@ -95,5 +97,85 @@ class SitemapController extends Controller
     public function llms(): Response
     {
         return response(Seo::llmsTxt(), 200, ['Content-Type' => 'text/plain; charset=UTF-8']);
+    }
+
+    /**
+     * sitemap.xsl：瀏覽器開啟 sitemap.xml 時套用的樣式表（顯示為美觀表格）。
+     */
+    public function sitemapStyle(): Response
+    {
+        $siteName = Seo::siteName();
+
+        $xsl = <<<XSL
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:s="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+<xsl:template match="/">
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>XML Sitemap — {$siteName}</title>
+<style>
+  :root{--gold:#c9a86a;--ink:#1a1a1c;--muted:#6b6b70;--line:#e7e7ea;--bg:#f6f6f4;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Noto Sans TC',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);}
+  .wrap{max-width:1000px;margin:0 auto;padding:2.5rem 1.25rem;}
+  header{border-bottom:2px solid var(--gold);padding-bottom:1rem;margin-bottom:1.25rem;}
+  h1{margin:0;font-size:1.5rem;letter-spacing:.02em;}
+  .sub{color:var(--muted);font-size:.9rem;margin-top:.4rem;line-height:1.6;}
+  .count{display:inline-block;margin-top:.6rem;background:var(--ink);color:#fff;border-radius:999px;padding:.2rem .8rem;font-size:.8rem;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th,td{text-align:left;padding:.7rem .9rem;font-size:.88rem;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:#fafafa;color:var(--muted);font-weight:600;letter-spacing:.04em;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:#fcfbf8;}
+  td a{color:#1257a8;text-decoration:none;word-break:break-all;}
+  td a:hover{text-decoration:underline;}
+  .lang{display:inline-block;background:#f0ece2;color:#8a6d29;border-radius:4px;padding:.05rem .4rem;font-size:.72rem;margin:0 .15rem .15rem 0;}
+  .num{color:var(--muted);white-space:nowrap;}
+  footer{color:var(--muted);font-size:.78rem;margin-top:1.25rem;text-align:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>XML Sitemap</h1>
+    <div class="sub">{$siteName} · 此頁為網站地圖，供搜尋引擎索引；瀏覽器以表格美化顯示，實際內容為標準 XML。</div>
+    <span class="count"><xsl:value-of select="count(s:urlset/s:url)"/> 個網址</span>
+  </header>
+  <table>
+    <thead>
+      <tr><th>#</th><th>網址</th><th>語言版本</th><th>最後修改</th><th>頻率</th><th>優先度</th></tr>
+    </thead>
+    <tbody>
+      <xsl:for-each select="s:urlset/s:url">
+      <tr>
+        <td class="num"><xsl:value-of select="position()"/></td>
+        <td><a href="{s:loc}"><xsl:value-of select="s:loc"/></a></td>
+        <td>
+          <xsl:for-each select="xhtml:link[@rel='alternate'][@hreflang!='x-default']">
+            <span class="lang"><xsl:value-of select="@hreflang"/></span>
+          </xsl:for-each>
+        </td>
+        <td class="num"><xsl:value-of select="substring(s:lastmod,1,10)"/></td>
+        <td class="num"><xsl:value-of select="s:changefreq"/></td>
+        <td class="num"><xsl:value-of select="s:priority"/></td>
+      </tr>
+      </xsl:for-each>
+    </tbody>
+  </table>
+  <footer>由 {$siteName} 自動產生</footer>
+</div>
+</body>
+</html>
+</xsl:template>
+</xsl:stylesheet>
+XSL;
+
+        return response($xsl, 200, ['Content-Type' => 'text/xsl; charset=UTF-8']);
     }
 }

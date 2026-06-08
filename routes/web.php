@@ -23,6 +23,7 @@ Route::get('/lang/{code}', [LocaleController::class, 'switch'])->name('frontend.
 
 // 站台級 SEO 檔案（公開、動態產生）
 Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
+Route::get('/sitemap.xsl', [SitemapController::class, 'sitemapStyle'])->name('sitemap.xsl');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/llms.txt', [SitemapController::class, 'llms'])->name('llms');
 
