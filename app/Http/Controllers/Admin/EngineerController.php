@@ -80,6 +80,13 @@ class EngineerController extends Controller
                     $output = Artisan::output();
                     break;
 
+                case 'seed':
+                    // 寫死只跑 db:seed --force：所有 seeder 皆 firstOrCreate，僅補建缺少資料、不覆寫既有內容。
+                    // 刻意不支援 migrate:fresh / --seed，避免清庫風險。
+                    Artisan::call('db:seed', ['--force' => true]);
+                    $output = Artisan::output();
+                    break;
+
                 case 'geoip-update':
                     // 用自製串流指令：低記憶體、不需提高 memory_limit（適用受限正式環境）
                     Artisan::call('geoip:download');
