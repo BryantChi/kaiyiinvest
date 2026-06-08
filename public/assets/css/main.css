@@ -1,0 +1,788 @@
+/* ===================================
+   Kaiyi International - Main CSS
+   Color: Black, White, Gold
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold: #C9A961;
+    --gold-dark: #9F7E3C;
+    --black: #0A0A0A;
+    --charcoal: #1C1C1C;
+    --gray: #666666;
+    --white: #FFFFFF;
+    --cream: #F8F6F0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    color: var(--charcoal);
+    line-height: 1.7;
+}
+
+/* ===== PAGE LOADER ===== */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.page-loader.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    animation: logoFade 1.5s ease-in-out infinite;
+}
+
+.loader-spinner {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(201, 169, 97, 0.2);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    color: var(--cream);
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    margin-top: 1.5rem;
+    opacity: 0.7;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes logoFade {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===== NAVIGATION ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--gold);
+}
+
+.nav-container {
+    max-width: none;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.25rem 3.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+}
+
+.logo .logo-text {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.logo-text span,
+.logo-text a {
+    text-decoration: none;
+}
+
+.logo span {
+    text-decoration: none;
+}
+
+.logo:hover span {
+    text-decoration: none;
+}
+
+.logo img {
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.logo-main {
+    font-family: 'Cinzel', serif;
+    font-size: 1.65rem;
+    color: var(--gold);
+    /* color: var(--white); */
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: normal;
+}
+
+.logo-sub {
+    font-size: 0.7rem;
+    color: var(--white);
+    letter-spacing: 0.2em;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+.nav-menu > li {
+    position: relative;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--gold);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+}
+
+/* Dropdown icon */
+.nav-link .dropdown-icon {
+    font-size: 0.7rem;
+    transition: transform 0.3s;
+}
+
+.nav-menu > li:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1.5rem;
+    background: rgba(10, 10, 10, 0.98);
+    backdrop-filter: blur(10px);
+    min-width: 280px;
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 100;
+    padding: 1rem 0;
+}
+
+.nav-menu > li:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    margin-top: 1rem;
+}
+
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent var(--gold) transparent;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    position: relative;
+    border-left: 3px solid transparent;
+}
+
+.dropdown-item:hover {
+    background: rgba(201, 169, 97, 0.1);
+    color: var(--gold);
+    border-left-color: var(--gold);
+    padding-left: 1.75rem;
+}
+
+.dropdown-item i {
+    margin-right: 0.75rem;
+    width: 20px;
+    text-align: center;
+    color: var(--gold);
+}
+
+.mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.mobile-toggle span {
+    width: 25px;
+    height: 2px;
+    background: var(--gold);
+}
+
+/* ===== HERO ===== */
+.hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,0.8), rgba(28,28,28,0.7));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1040px;
+    padding: 0 2rem;
+}
+
+.hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.25rem, 4vw + 1.25rem, 5rem);
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.text-gold {
+    color: var(--gold);
+}
+
+.hero-subtitle {
+    color: var(--cream);
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.4rem);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.1em;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 2px solid;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--black);
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border-color: var(--white);
+    color: var(--white);
+}
+
+.btn-outline:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+.btn-lg {
+    padding: 1.25rem 3rem;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+    padding: 5rem 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.75rem, 2.5vw + 1rem, 3rem);
+    color: var(--black);
+    line-height: 1.25;
+}
+
+/* ===== OFFSET BORDER EFFECTS - 已移至各頁面專屬 CSS ===== */
+
+/* ===== FEATURES ===== */
+.features-section {
+    background: var(--cream);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--white);
+    padding: 3rem 2rem;
+    text-align: center;
+    border: 1px solid #E8E8E8;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+/* 樣式 3: 雙層邊框效果 - 首頁特色卡片 */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid var(--gold);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    border-color: var(--gold);
+}
+
+.feature-card:hover::before {
+    opacity: 0.5;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    margin-bottom: 1rem;
+    color: var(--black);
+}
+
+.feature-card p {
+    color: var(--gray);
+    line-height: 1.8;
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+    position: relative;
+    padding: 8rem 2rem;
+    text-align: center;
+}
+
+.cta-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.85);
+}
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.75rem, 2.5vw + 1rem, 3rem);
+    color: var(--white);
+    margin-bottom: 1.5rem;
+    line-height: 1.25;
+}
+
+.cta-content p {
+    color: var(--cream);
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: var(--black);
+    color: var(--cream);
+    padding: 4rem 2rem 2rem;
+    border-top: 2px solid var(--gold);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-col h4 {
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col li {
+    margin-bottom: 0.75rem;
+}
+
+.footer-col a {
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-col a:hover {
+    color: var(--gold);
+}
+
+/* Footer contact list — gold icons aligned with text, wrapped lines hang under the text */
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.footer-contact span {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7em;
+    line-height: 1.6;
+}
+
+.footer-contact span i {
+    flex-shrink: 0;
+    width: 1.1em;
+    margin-top: 0.3em;
+    color: var(--gold);
+    font-size: 0.95em;
+    text-align: center;
+}
+
+/* Footer phone (tel:) links — match cream text, override iOS Safari default blue */
+.footer-col p a {
+    color: var(--cream);
+    -webkit-text-fill-color: var(--cream);
+    text-decoration: none;
+    transition: color 0.3s, -webkit-text-fill-color 0.3s;
+}
+
+.footer-col p a:hover {
+    color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201,169,97,0.2);
+    color: var(--gray);
+    font-size: 0.9rem;
+}
+
+/* ===== BACK TO TOP ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: var(--gold);
+    color: var(--black);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--gold-dark);
+    transform: translateY(-5px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    /* 減少手機版邊距 */
+    .container {
+        padding: 0 1.25rem;
+    }
+
+    .section {
+        padding: 4rem 1.25rem;
+    }
+
+    .nav-container {
+        padding: 1.25rem 1.25rem;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        flex-direction: column;
+        background: rgba(10,10,10,0.98);
+        width: 100%;
+        padding: 2rem;
+        transition: left 0.3s;
+        gap: 0;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+    }
+
+    .nav-menu > li {
+        width: 100%;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    }
+
+    .nav-link {
+        padding: 1rem 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    /* 手機版下拉選單 */
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        opacity: 1;
+        visibility: visible;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .nav-menu > li.dropdown-active .dropdown-menu {
+        max-height: 400px;
+    }
+
+    .dropdown-menu::before {
+        display: none;
+    }
+
+    .dropdown-item {
+        padding: 0.85rem 1rem 0.85rem 2rem;
+        border-left: none;
+        background: rgba(201, 169, 97, 0.05);
+    }
+
+    .dropdown-item:hover {
+        padding-left: 2.5rem;
+        background: rgba(201, 169, 97, 0.15);
+    }
+
+    .nav-menu > li:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        margin-top: 0;
+    }
+
+    .dropdown-icon {
+        transition: transform 0.3s;
+    }
+
+    .nav-menu > li.dropdown-active .dropdown-icon {
+        transform: rotate(180deg);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .mobile-toggle {
+        display: flex;
+    }
+
+    .hero {
+        margin-top: 60px;
+    }
+
+    .hero-content {
+        padding: 0 1.25rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-section {
+        padding: 6rem 1.25rem;
+    }
+
+    .footer {
+        padding: 3rem 1.25rem 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 更小螢幕進一步減少邊距 */
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section {
+        padding: 3rem 1rem;
+    }
+
+    .nav-container {
+        padding: 1rem;
+    }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .cta-section {
+        padding: 5rem 1rem;
+    }
+
+    .footer {
+        padding: 2.5rem 1rem 1.5rem;
+    }
+
+    .section-header {
+        margin-bottom: 3rem;
+    }
+}

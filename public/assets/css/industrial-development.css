@@ -1,0 +1,845 @@
+/* Industrial Development Page Styles */
+/* Using website color scheme: Black, White, Gold */
+
+/* Service Overview Section */
+.service-overview {
+    background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
+    padding: 80px 0;
+}
+
+.overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.overview-content .section-header {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.overview-text .lead {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #1C1C1C;
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.overview-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.achievement-list {
+    list-style: none;
+    margin-top: 30px;
+    padding: 0;
+}
+
+.achievement-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 12px 0;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #1C1C1C;
+}
+
+.achievement-list li i {
+    color: #C9A961;
+    font-size: 1.2rem;
+    margin-top: 3px;
+    flex-shrink: 0;
+}
+
+.achievement-list li span {
+    flex: 1;
+}
+
+.overview-image {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.overview-image img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.overview-image:hover img {
+    transform: scale(1.05);
+}
+
+.image-badge {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 20px 30px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.image-badge i {
+    font-size: 2rem;
+    color: #C9A961;
+}
+
+.image-badge span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1C1C1C;
+}
+
+/* Service Process Section */
+.service-process {
+    background: white;
+    padding: 80px 0;
+}
+
+/* Top Row Icons */
+.process-icons-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: 50px auto 60px;
+    padding: 0 20px;
+}
+
+.process-icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.icon-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid #1C1C1C;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.icon-circle::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(201, 169, 97, 0.1), rgba(201, 169, 97, 0.05));
+    z-index: -1;
+}
+
+.process-icon-item:hover .icon-circle {
+    transform: scale(1.1);
+    border-color: #C9A961;
+    box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
+}
+
+.icon-circle i {
+    font-size: 3.5rem;
+    color: #1C1C1C;
+}
+
+.icon-label {
+    background: #1C1C1C;
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 4px;
+    min-width: 120px;
+    text-align: center;
+}
+
+/* Arrow Flow Diagram */
+.process-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+.flow-arrow {
+    position: relative;
+    height: 80px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 50%, calc(100% - 40px) 100%, 0 100%, 40px 50%);
+    margin-right: -40px;
+    transition: all 0.3s ease;
+}
+
+.flow-arrow:first-child {
+    clip-path: polygon(0 0, calc(100% - 40px) 0, 100% 50%, calc(100% - 40px) 100%, 0 100%);
+}
+
+.flow-arrow:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    filter: brightness(1.1);
+}
+
+.flow-arrow-blue {
+    background: #1C1C1C;
+}
+
+.flow-arrow-gold {
+    background: #C9A961;
+}
+
+.arrow-content {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Bottom Description */
+.process-description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 60px;
+    padding: 0 20px;
+}
+
+.description-arrow {
+    font-size: 3rem;
+    color: #C9A961;
+    animation: arrowPulse 2s ease-in-out infinite;
+}
+
+.description-arrow-left {
+    animation-delay: 0s;
+}
+
+.description-arrow-right {
+    animation-delay: 1s;
+}
+
+@keyframes arrowPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.description-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1C1C1C;
+    text-align: center;
+    padding: 20px 40px;
+    border-top: 3px solid #C9A961;
+    border-bottom: 3px solid #C9A961;
+    min-width: 300px;
+}
+
+/* Service Features Section */
+.service-features {
+    background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
+    padding: 80px 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #F8F6F0, #FFFFFF);
+    border: 2px solid #C9A961;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    background: linear-gradient(135deg, #C9A961, #9F7E3C);
+    transform: scale(1.1);
+}
+
+.feature-icon i {
+    font-size: 2.5rem;
+    color: #C9A961;
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover .feature-icon i {
+    color: white;
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1C1C1C;
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #666;
+}
+
+/* Service Scope Section */
+.service-scope {
+    background: white;
+    padding: 80px 0;
+}
+
+.scope-accordion {
+    max-width: 900px;
+    margin: 50px auto 0;
+}
+
+.scope-item {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.scope-item:hover {
+    border-color: #C9A961;
+    box-shadow: 0 5px 20px rgba(201, 169, 97, 0.2);
+}
+
+.scope-header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px;
+    cursor: pointer;
+    background: white;
+    transition: background 0.3s ease;
+}
+
+.scope-header:hover {
+    background: #f8f9fa;
+}
+
+.scope-item.active .scope-header {
+    background: linear-gradient(135deg, #1C1C1C, #0A0A0A);
+}
+
+.scope-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #F8F6F0, #FFFFFF);
+    border: 2px solid #C9A961;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    transition: all 0.3s ease;
+}
+
+.scope-item.active .scope-icon {
+    background: white;
+    border-color: #C9A961;
+}
+
+.scope-icon i {
+    font-size: 1.8rem;
+    color: #C9A961;
+}
+
+.scope-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1C1C1C;
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+.scope-item.active .scope-header h3 {
+    color: white;
+}
+
+.accordion-toggle {
+    font-size: 1.2rem;
+    color: #999;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.scope-item.active .accordion-toggle {
+    transform: rotate(180deg);
+    color: white;
+}
+
+.scope-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.scope-item.active .scope-content {
+    max-height: 500px;
+}
+
+.scope-content ul {
+    list-style: none;
+    padding: 30px;
+    margin: 0;
+    background: #f8f9fa;
+}
+
+.scope-content li {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #555;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.scope-content li:last-child {
+    border-bottom: none;
+}
+
+.scope-content li i {
+    color: #C9A961;
+    margin-right: 15px;
+    font-size: 1rem;
+}
+
+/* Target Industries Section */
+.target-industries {
+    background: linear-gradient(135deg, #F8F6F0 0%, #FFFFFF 100%);
+    padding: 80px 0;
+}
+
+.industries-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.industry-card {
+    background: white;
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.industry-card:hover {
+    transform: translateY(-10px);
+    border-color: #C9A961;
+    box-shadow: 0 15px 40px rgba(201, 169, 97, 0.2);
+}
+
+.industry-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #1C1C1C, #0A0A0A);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    transition: all 0.3s ease;
+}
+
+.industry-card:hover .industry-icon {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.industry-icon i {
+    font-size: 2.5rem;
+    color: white;
+}
+
+.industry-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #1C1C1C;
+    margin-bottom: 15px;
+}
+
+.industry-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, #1C1C1C 0%, #0A0A0A 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+    opacity: 0.5;
+}
+
+.cta-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.cta-content h2 {
+    font-size: clamp(1.75rem, 2.5vw + 1rem, 2.75rem);
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+    font-family: 'Cinzel', serif;
+    line-height: 1.25;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.btn-primary {
+    background: #C9A961;
+    color: white;
+    border-color: #C9A961;
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: #C9A961;
+    border-color: #C9A961;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(201, 169, 97, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border-color: white;
+}
+
+.btn-secondary:hover {
+    background: white;
+    color: #1C1C1C;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+}
+
+.breadcrumb a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+    color: white;
+}
+
+.breadcrumb span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .overview-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .features-grid,
+    .industries-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .achievement-list li {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+
+    .achievement-list li i {
+        font-size: 1.1rem;
+    }
+
+    .overview-image img {
+        height: 400px;
+    }
+
+    .process-icons-row {
+        flex-wrap: wrap;
+        gap: 30px;
+    }
+
+    .process-icon-item {
+        min-width: 150px;
+    }
+
+    .icon-circle {
+        width: 120px;
+        height: 120px;
+    }
+
+    .icon-circle i {
+        font-size: 3rem;
+    }
+
+    .flow-arrow {
+        height: 70px;
+    }
+
+    .arrow-content {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
+
+    .service-overview,
+    .service-process,
+    .service-features,
+    .service-scope,
+    .target-industries,
+    .cta-section {
+        padding: 60px 0;
+    }
+
+    .features-grid,
+    .industries-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .achievement-list li {
+        font-size: 0.95rem;
+        padding: 8px 0;
+        gap: 12px;
+    }
+
+    .achievement-list li i {
+        font-size: 1rem;
+    }
+
+    .overview-image img {
+        height: 300px;
+    }
+
+    .cta-content p {
+        font-size: 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+
+    .scope-accordion {
+        margin-top: 30px;
+    }
+
+    .scope-header {
+        padding: 20px;
+    }
+
+    .scope-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .scope-icon i {
+        font-size: 1.5rem;
+    }
+
+    .scope-header h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Process Flow Mobile */
+    .process-icons-row {
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .icon-circle {
+        width: 110px;
+        height: 110px;
+    }
+
+    .icon-circle i {
+        font-size: 2.5rem;
+    }
+
+    .icon-label {
+        min-width: 100px;
+        font-size: 1rem;
+        padding: 10px 25px;
+    }
+
+    .process-flow {
+        flex-direction: column;
+        gap: 0;
+        margin: 30px auto;
+    }
+
+    .flow-arrow {
+        width: 100%;
+        height: 70px;
+        margin-right: 0;
+        margin-bottom: -35px;
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 35px), 50% 100%, 0 calc(100% - 35px));
+    }
+
+    .flow-arrow:first-child {
+        clip-path: polygon(0 0, 100% 0, 100% calc(100% - 35px), 50% 100%, 0 calc(100% - 35px));
+    }
+
+    .flow-arrow:last-child {
+        margin-bottom: 0;
+    }
+
+    .arrow-content {
+        font-size: 1.1rem;
+        padding: 20px 20px 35px 20px;
+    }
+
+    .process-description {
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .description-arrow {
+        font-size: 2rem;
+    }
+
+    .description-text {
+        font-size: 1.1rem;
+        padding: 15px 25px;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .process-icon,
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .process-icon i,
+    .feature-icon i {
+        font-size: 1.5rem;
+    }
+
+    .industry-icon {
+        width: 80px;
+        height: 80px;
+    }
+
+    .industry-icon i {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,468 @@
+/* ===================================
+   Design Enhancements - 設計增強
+   增加設計感、質感與專業感
+   =================================== */
+
+/* 全域背景裝飾 */
+body {
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.03) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(201, 169, 97, 0.02) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* 區塊標題增強 */
+.section-title {
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background: var(--gold);
+}
+
+/* 區塊副標題裝飾 */
+.section-subtitle {
+    position: relative;
+    display: inline-block;
+    padding: 0 1rem;
+}
+
+.section-subtitle::before,
+.section-subtitle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+}
+
+.section-subtitle::before {
+    left: -35px;
+}
+
+.section-subtitle::after {
+    right: -35px;
+}
+
+/* Hero 區塊增強 - 柔和的漸層效果 */
+.hero-overlay {
+    background: linear-gradient(
+        140deg,
+        rgba(10,10,10,0.80) 0%,
+        rgba(18,18,18,0.75) 25%,
+        rgba(22,22,22,0.72) 50%,
+        rgba(18,18,18,0.75) 75%,
+        rgba(10,10,10,0.78) 100%
+    ) !important;
+}
+
+/* Hero 區塊底部柔和漸層 */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(
+        to top,
+        rgba(248, 246, 240, 1) 0%,
+        rgba(248, 246, 240, 0.95) 10%,
+        rgba(248, 246, 240, 0.85) 20%,
+        rgba(248, 246, 240, 0.7) 35%,
+        rgba(248, 246, 240, 0.5) 50%,
+        rgba(248, 246, 240, 0.3) 65%,
+        rgba(248, 246, 240, 0.15) 80%,
+        rgba(248, 246, 240, 0.05) 90%,
+        rgba(248, 246, 240, 0) 100%
+    );
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-content {
+    z-index: 2;
+}
+
+/* 頁面標題背景 - 柔和的漸層效果 */
+.page-header-overlay {
+    background: linear-gradient(
+        140deg,
+        rgba(10,10,10,0.75) 0%,
+        rgba(18,18,18,0.70) 25%,
+        rgba(22,22,22,0.68) 50%,
+        rgba(18,18,18,0.70) 75%,
+        rgba(10,10,10,0.73) 100%
+    ) !important;
+}
+
+/* 頁面標題底部柔和漸層 */
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(
+        to top,
+        rgba(248, 246, 240, 1) 0%,
+        rgba(248, 246, 240, 0.95) 10%,
+        rgba(248, 246, 240, 0.85) 20%,
+        rgba(248, 246, 240, 0.65) 35%,
+        rgba(248, 246, 240, 0.45) 50%,
+        rgba(248, 246, 240, 0.25) 65%,
+        rgba(248, 246, 240, 0.12) 80%,
+        rgba(248, 246, 240, 0.05) 90%,
+        rgba(248, 246, 240, 0) 100%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+.page-header-content {
+    z-index: 3;
+}
+
+/* 卡片懸浮效果增強 */
+.feature-card,
+.service-card,
+.partner-card,
+.team-card,
+.partner-detail-card {
+    will-change: transform;
+}
+
+/* 按鈕增強效果 */
+.btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 導航欄陰影增強 */
+.navbar {
+    box-shadow: 0 2px 20px rgba(10, 10, 10, 0.1);
+}
+
+/* Footer 裝飾線 - 簡化 */
+.footer {
+    position: relative;
+}
+
+/* 圖片容器增強 */
+.content-image,
+.team-image,
+.partner-detail-image {
+    overflow: hidden;
+}
+
+.content-image img,
+.team-image img,
+.partner-detail-image img {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-image:hover img,
+.team-card:hover .team-image img,
+.partner-detail-card:hover .partner-detail-image img {
+    transform: scale(1.08);
+}
+
+/* Icon 動畫效果 */
+.feature-icon,
+.service-icon,
+.partner-icon,
+.info-icon i {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .feature-icon,
+.service-card:hover .service-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+/* 數字統計動畫 */
+.stat-number {
+    position: relative;
+    display: inline-block;
+}
+
+.stat-number::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+}
+
+.stat-box:hover .stat-number::after {
+    width: 80%;
+}
+
+/* 時間軸裝飾 */
+.timeline-year {
+    position: relative;
+    display: inline-block;
+}
+
+.timeline-year::after {
+    content: '';
+    position: absolute;
+    right: -25px;
+    top: 50%;
+    width: 15px;
+    height: 15px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    transform: translateY(-50%);
+    box-shadow: 0 0 0 3px var(--cream);
+}
+
+/* 流程步驟編號增強 */
+.step-number {
+    position: relative;
+    box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
+}
+
+.step-number::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s;
+}
+
+.process-step:hover .step-number::before {
+    opacity: 0.2;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.1;
+    }
+}
+
+/* 關係企業圖表增強 */
+.partner-logo-circle {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 連接線動畫 */
+.connection-lines line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 2s ease-in-out forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* 表單輸入增強 */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
+}
+
+/* 社交連結動畫 */
+.social-link {
+    overflow: hidden;
+}
+
+.social-link i {
+    transition: transform 0.3s ease;
+}
+
+.social-link:hover i {
+    transform: scale(1.2) rotate(360deg);
+}
+
+/* 返回頂部按鈕增強 */
+.back-to-top {
+    box-shadow: 0 4px 15px rgba(201, 169, 97, 0.4);
+}
+
+.back-to-top::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s;
+}
+
+.back-to-top:hover::before {
+    opacity: 0.3;
+    animation: pulse 1s infinite;
+}
+
+/* 載入動畫（可選） */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.feature-card,
+.service-card,
+.team-card,
+.partner-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.feature-card:nth-child(2) { animation-delay: 0.1s; }
+.feature-card:nth-child(3) { animation-delay: 0.2s; }
+
+/* 文字選取顏色 */
+::selection {
+    background: var(--gold);
+    color: var(--black);
+}
+
+::-moz-selection {
+    background: var(--gold);
+    color: var(--black);
+}
+
+/* 滾動條樣式 */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-dark);
+}
+
+/* 區塊分隔線裝飾 */
+.section {
+    position: relative;
+}
+
+.section:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+/* CTA 區塊增強 - 柔和的漸層效果 */
+.cta-overlay {
+    background: linear-gradient(
+        140deg,
+        rgba(10,10,10,0.86) 0%,
+        rgba(18,18,18,0.82) 25%,
+        rgba(22,22,22,0.80) 50%,
+        rgba(18,18,18,0.82) 75%,
+        rgba(10,10,10,0.85) 100%
+    ) !important;
+}
+
+/* 響應式優化 */
+@media (max-width: 768px) {
+    body::before,
+    body::after {
+        width: 300px;
+        height: 300px;
+    }
+
+    .section-subtitle::before,
+    .section-subtitle::after {
+        display: none;
+    }
+}

@@ -1,0 +1,427 @@
+/* ===================================
+   Contact Page Styles
+   =================================== */
+
+/* Page Header */
+.page-header {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.page-header-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.page-header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,0.75), rgba(28,28,28,0.65));
+}
+
+.page-header-content {
+    position: relative;
+    z-index: 1;
+    color: var(--white);
+}
+
+.page-header-content h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem);
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.page-header-content p {
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+}
+
+/* Contact Section */
+.contact-section {
+    background: var(--cream);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* Contact Info */
+.contact-info {
+    background: var(--white);
+    padding: 3rem;
+    position: relative;
+}
+
+/* 樣式 2: 完整偏移矩形邊框 - 聯絡資訊框 */
+.contact-info::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: 12px;
+    bottom: 12px;
+    border: 1px solid var(--gold);
+    opacity: 0.3;
+    transition: all 0.4s ease;
+    pointer-events: none;
+}
+
+.info-item {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+}
+
+.info-item:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2.5rem;
+}
+
+.info-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+}
+
+.info-item:hover .info-icon {
+    transform: rotate(360deg);
+    background: var(--gold-dark);
+}
+
+.info-icon i {
+    font-size: 1.5rem;
+    color: var(--black);
+}
+
+.info-content h4 {
+    font-size: 1.1rem;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+}
+
+.info-content p {
+    color: var(--gray);
+    line-height: 1.6;
+}
+
+/* Address list — hanging indent so wrapped lines align under the address, not the 河內/海防 label */
+.info-content p.address-list span {
+    display: block;
+    padding-left: 3em;
+    text-indent: -3em;
+    margin-bottom: 0.5rem;
+}
+
+.info-content p.address-list span:last-child {
+    margin-bottom: 0;
+}
+
+/* Phone (tel:) links — match gray text, override iOS Safari default blue */
+.info-content p a {
+    color: var(--gray);
+    -webkit-text-fill-color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s, -webkit-text-fill-color 0.3s;
+}
+
+.info-content p a:hover {
+    color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.social-link:hover {
+    background: var(--gold);
+    color: var(--black);
+    transform: translateY(-3px);
+}
+
+.social-link:hover::before {
+    opacity: 0.3;
+}
+
+/* Contact Form */
+.contact-form-wrapper {
+    background: var(--white);
+    padding: 3rem;
+    position: relative;
+}
+
+/* 樣式 3: 雙層邊框效果 - 聯絡表單 */
+.contact-form-wrapper {
+    border: 1px solid var(--gold);
+}
+
+.contact-form-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    transition: all 0.4s ease;
+}
+
+.contact-form {
+    position: relative;
+}
+
+.form-group {
+    margin-bottom: 1.75rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--charcoal);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #E8E8E8;
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    background: var(--white);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23C9A961' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+.contact-form .btn {
+    width: 100%;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+/* Map Section */
+.map-section {
+    padding: 0;
+}
+
+/* 兩個地圖並排，沿用單一地圖的高度與裝飾線樣式 */
+.map-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.map-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+}
+
+/* 地點標籤 */
+.map-container .map-label {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.75);
+    color: var(--gold);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 樣式 12: 簡約線條邊框 - 地圖容器 */
+.map-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.4;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.map-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100px;
+    height: 2px;
+    background: var(--gold);
+    opacity: 0.4;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.map-container iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+/* Form Validation Styles — 只在使用者填寫並離開欄位後才套色，頁面載入時不顯示紅/綠框 */
+.form-group input:user-invalid,
+.form-group select:user-invalid,
+.form-group textarea:user-invalid {
+    border-color: #dc3545;
+}
+
+.form-group input:user-valid,
+.form-group select:user-valid,
+.form-group textarea:user-valid {
+    border-color: #28a745;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .contact-grid {
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        height: 50vh;
+        margin-top: 60px;
+    }
+
+    .contact-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-info,
+    .contact-form-wrapper {
+        padding: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .map-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .map-container {
+        height: 350px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-section {
+        padding: 3rem 1rem;
+    }
+
+    .contact-info,
+    .contact-form-wrapper {
+        padding: 1.5rem;
+    }
+
+    .info-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-links {
+        justify-content: center;
+    }
+
+    .map-container {
+        height: 300px;
+    }
+}

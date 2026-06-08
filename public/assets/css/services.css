@@ -1,0 +1,669 @@
+/* ===================================
+   Services Page Styles
+   =================================== */
+
+/* Page Header */
+.page-header {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.page-header-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.page-header-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(10,10,10,0.75), rgba(28,28,28,0.65));
+}
+
+.page-header-content {
+    position: relative;
+    z-index: 1;
+    color: var(--white);
+}
+
+.page-header-content h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem);
+    margin-bottom: 1rem;
+    color: var(--gold);
+}
+
+.page-header-content p {
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+}
+
+/* Section Description */
+.section-description {
+    text-align: center;
+    color: var(--gray);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 1rem auto 0;
+    line-height: 1.8;
+}
+
+/* Services Grid */
+.services-section {
+    background: var(--cream);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 3rem 2.5rem;
+    border: 1px solid #E8E8E8;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Service Number */
+.service-number {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.1;
+    line-height: 1;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-number {
+    opacity: 0.2;
+    transform: scale(1.1);
+}
+
+/* 簡化的邊框效果 - 服務卡片 */
+.service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.4s ease;
+}
+
+.service-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(201, 169, 97, 0.15);
+}
+
+.service-card:hover::before {
+    width: 100%;
+}
+
+.service-icon {
+    font-size: 3rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s;
+}
+
+.service-card:hover .service-icon {
+    transform: scale(1.05) translateY(-5px);
+}
+
+.service-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+    font-weight: 600;
+}
+
+.service-desc {
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 0;
+}
+
+.service-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 2rem;
+    flex-grow: 1;
+}
+
+.service-list li {
+    padding: 0.6rem 0;
+    padding-left: 1.5rem;
+    color: var(--charcoal);
+    font-size: 0.95rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.service-list li::before {
+    content: '\f00c';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.8rem;
+}
+
+.service-list li:hover {
+    padding-left: 1.8rem;
+    color: var(--gold);
+}
+
+/* Service Link */
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    margin-top: auto;
+}
+
+.service-link i {
+    transition: transform 0.3s;
+}
+
+.service-link:hover {
+    gap: 0.8rem;
+}
+
+.service-link:hover i {
+    transform: translateX(5px);
+}
+
+/* Sub-Services Section */
+.sub-services-section {
+    background: var(--white);
+    padding: 5rem 2rem;
+}
+
+.sub-services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sub-service-card {
+    background: var(--cream);
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #E8E8E8;
+    position: relative;
+}
+
+.sub-service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--gold);
+    transition: all 0.3s ease;
+}
+
+.sub-service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--gold);
+}
+
+.sub-service-card:hover::before {
+    width: 60%;
+}
+
+.sub-service-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1.5rem;
+    background: var(--white);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.sub-service-icon i {
+    font-size: 2rem;
+    color: var(--gold);
+    transition: all 0.3s ease;
+}
+
+.sub-service-card:hover .sub-service-icon {
+    background: var(--gold);
+    transform: rotateY(360deg);
+}
+
+.sub-service-card:hover .sub-service-icon i {
+    color: var(--black);
+}
+
+.sub-service-card h3 {
+    font-size: 1.2rem;
+    color: var(--black);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.sub-service-card h3 a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.sub-service-card h3 a:hover {
+    color: var(--gold);
+}
+
+.sub-service-list {
+    list-style: none;
+    text-align: left;
+    padding: 0;
+}
+
+.sub-service-list li {
+    padding: 0.6rem 0;
+    padding-left: 1.5rem;
+    color: var(--charcoal);
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.sub-service-list li a {
+    color: var(--charcoal);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.sub-service-list li a:hover {
+    color: var(--gold);
+}
+
+.sub-service-list li::before {
+    content: '\f054';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.7rem;
+}
+
+.sub-service-list li:hover {
+    padding-left: 1.8rem;
+    color: var(--gold);
+}
+
+/* Process Section - Redesigned */
+.process-section {
+    background: var(--cream);
+    padding: 6rem 2rem;
+}
+
+/* Process Timeline Container */
+.process-timeline {
+    max-width: 1200px;
+    margin: 4rem auto 0;
+    position: relative;
+}
+
+/* Individual Process Step */
+.process-step {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeInStep 0.6s ease-out forwards;
+}
+
+.process-step:nth-child(1) { animation-delay: 0.1s; }
+.process-step:nth-child(2) { animation-delay: 0.2s; }
+.process-step:nth-child(3) { animation-delay: 0.3s; }
+.process-step:nth-child(4) { animation-delay: 0.4s; }
+.process-step:nth-child(5) { animation-delay: 0.5s; }
+.process-step:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInStep {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.process-step:last-child {
+    margin-bottom: 0;
+}
+
+/* Step Wrapper */
+.step-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: var(--white);
+    padding: 2rem 2.5rem;
+    flex: 1;
+    border-left: 4px solid var(--gold);
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.step-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(to right, rgba(201, 169, 97, 0.08), transparent);
+    transition: width 0.4s ease;
+}
+
+.process-step:hover .step-wrapper {
+    transform: translateX(10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-left-width: 6px;
+}
+
+.process-step:hover .step-wrapper::before {
+    width: 100%;
+}
+
+/* Step Icon Wrapper */
+.step-icon-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.step-number {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    opacity: 0.12;
+    line-height: 1;
+    z-index: 0;
+    transition: all 0.3s ease;
+}
+
+.process-step:hover .step-number {
+    opacity: 0.2;
+    transform: scale(1.1);
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--cream);
+    border: 3px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: all 0.4s ease;
+}
+
+.step-icon i {
+    font-size: 2rem;
+    color: var(--gold);
+    transition: all 0.3s ease;
+}
+
+.process-step:hover .step-icon {
+    background: var(--gold);
+    transform: rotate(360deg);
+    border-color: var(--gold-dark);
+}
+
+.process-step:hover .step-icon i {
+    color: var(--black);
+}
+
+/* Step Content */
+.step-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.step-content h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.step-content h4 {
+    font-size: 1.2rem;
+    color: var(--black);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.step-content p {
+    color: var(--gray);
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+/* Step Connector */
+.step-connector {
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 1rem;
+    flex-shrink: 0;
+}
+
+.connector-line {
+    width: 100%;
+    height: 100%;
+    color: var(--gold);
+    opacity: 0.4;
+}
+
+/* 移除隱藏最後一個連接線的規則，讓所有項目都顯示連接線 */
+
+/* Alternate Layout for Even Steps */
+.process-step:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+/* 所有步驟統一使用左側金色邊框 */
+.process-step:nth-child(even) .step-wrapper {
+    border-left: 4px solid var(--gold);
+    border-right: none;
+}
+
+.process-step:nth-child(even):hover .step-wrapper {
+    transform: translateX(-10px);
+    border-left-width: 6px;
+}
+
+.process-step:nth-child(even) .step-connector svg {
+    transform: scaleX(-1);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sub-services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .step-connector {
+        width: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        height: 50vh;
+        margin-top: 60px;
+    }
+
+    .services-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sub-services-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .sub-services-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    /* Process Timeline Mobile */
+    .process-section {
+        padding: 4rem 1.25rem;
+    }
+
+    .process-step {
+        flex-direction: column !important;
+        margin-bottom: 2rem;
+    }
+
+    .step-wrapper {
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+        padding: 2rem 1.5rem;
+        border-left: none !important;
+        border-right: none !important;
+        border-top: 4px solid var(--gold);
+    }
+
+    .process-step:hover .step-wrapper {
+        transform: translateY(-5px) translateX(0) !important;
+    }
+
+    .step-number {
+        font-size: 2rem;
+        top: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .process-step:hover .step-number {
+        transform: translateX(-50%) scale(1.1);
+    }
+
+    .step-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .step-icon i {
+        font-size: 1.75rem;
+    }
+
+    .step-content {
+        text-align: center;
+    }
+
+    .step-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .step-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .step-content p {
+        font-size: 0.9rem;
+    }
+
+    .step-connector {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .services-section {
+        padding: 3rem 1rem;
+    }
+
+    .sub-services-section {
+        padding: 3rem 1rem;
+    }
+
+    .sub-service-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .process-section {
+        padding: 3rem 1rem;
+    }
+
+    .step-wrapper {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step-icon i {
+        font-size: 1.5rem;
+    }
+}
