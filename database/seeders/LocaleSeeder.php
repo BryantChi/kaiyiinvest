@@ -17,7 +17,8 @@ class LocaleSeeder extends Seeder
         ];
 
         foreach ($locales as $locale) {
-            Locale::updateOrCreate(['code' => $locale['code']], $locale);
+            // firstOrCreate：語系已存在則保留後台設定（如啟用狀態），不覆寫
+            Locale::firstOrCreate(['code' => $locale['code']], $locale);
         }
 
         LocaleService::clearCache();

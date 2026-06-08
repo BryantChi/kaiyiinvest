@@ -21,7 +21,8 @@ class PageSeeder extends Seeder
         ];
 
         foreach ($pages as $page) {
-            Page::updateOrCreate(['key' => $page['key']], $page + ['is_active' => true]);
+            // firstOrCreate：頁面已存在則保留後台編輯內容，不覆寫；僅補建缺少的頁面
+            Page::firstOrCreate(['key' => $page['key']], $page + ['is_active' => true]);
         }
     }
 }

@@ -205,7 +205,8 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Setting::create($setting);
+            // firstOrCreate：設定已存在則保留後台修改值，不覆寫；僅補建缺少的設定
+            Setting::firstOrCreate(['key' => $setting['key']], $setting);
         }
 
         $this->command->info('系統設定已建立完成');

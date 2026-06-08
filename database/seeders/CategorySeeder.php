@@ -9,13 +9,14 @@ class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * 以 slug 為唯一鍵 firstOrCreate：分類已存在則保留既有內容，不覆寫；僅補建缺少的分類。
      */
     public function run(): void
     {
         // 頂層分類
-        $tech = Category::create([
+        $tech = Category::firstOrCreate(['slug' => 'tech'], [
             'name' => '技術',
-            'slug' => 'tech',
             'description' => '技術相關文章',
             'status' => 'active',
             'order' => 1,
@@ -23,9 +24,8 @@ class CategorySeeder extends Seeder
             'icon' => 'cil-code',
         ]);
 
-        $news = Category::create([
+        $news = Category::firstOrCreate(['slug' => 'news'], [
             'name' => '新聞',
-            'slug' => 'news',
             'description' => '最新新聞資訊',
             'status' => 'active',
             'order' => 2,
@@ -33,9 +33,8 @@ class CategorySeeder extends Seeder
             'icon' => 'cil-newspaper',
         ]);
 
-        $lifestyle = Category::create([
+        $lifestyle = Category::firstOrCreate(['slug' => 'lifestyle'], [
             'name' => '生活',
-            'slug' => 'lifestyle',
             'description' => '生活相關文章',
             'status' => 'active',
             'order' => 3,
@@ -44,10 +43,9 @@ class CategorySeeder extends Seeder
         ]);
 
         // 子分類 - 技術
-        Category::create([
+        Category::firstOrCreate(['slug' => 'laravel'], [
             'parent_id' => $tech->id,
             'name' => 'Laravel',
-            'slug' => 'laravel',
             'description' => 'Laravel 框架相關',
             'status' => 'active',
             'order' => 1,
@@ -55,10 +53,9 @@ class CategorySeeder extends Seeder
             'icon' => 'cib-laravel',
         ]);
 
-        Category::create([
+        Category::firstOrCreate(['slug' => 'vuejs'], [
             'parent_id' => $tech->id,
             'name' => 'Vue.js',
-            'slug' => 'vuejs',
             'description' => 'Vue.js 框架相關',
             'status' => 'active',
             'order' => 2,
@@ -66,10 +63,9 @@ class CategorySeeder extends Seeder
             'icon' => 'cib-vue-js',
         ]);
 
-        Category::create([
+        Category::firstOrCreate(['slug' => 'database'], [
             'parent_id' => $tech->id,
             'name' => 'Database',
-            'slug' => 'database',
             'description' => '資料庫相關',
             'status' => 'active',
             'order' => 3,
@@ -78,10 +74,9 @@ class CategorySeeder extends Seeder
         ]);
 
         // 子分類 - 新聞
-        Category::create([
+        Category::firstOrCreate(['slug' => 'industry'], [
             'parent_id' => $news->id,
             'name' => '產業動態',
-            'slug' => 'industry',
             'description' => '產業最新動態',
             'status' => 'active',
             'order' => 1,
@@ -89,10 +84,9 @@ class CategorySeeder extends Seeder
             'icon' => 'cil-industry',
         ]);
 
-        Category::create([
+        Category::firstOrCreate(['slug' => 'announcement'], [
             'parent_id' => $news->id,
             'name' => '公司公告',
-            'slug' => 'announcement',
             'description' => '公司公告事項',
             'status' => 'active',
             'order' => 2,
@@ -101,10 +95,9 @@ class CategorySeeder extends Seeder
         ]);
 
         // 子分類 - 生活
-        Category::create([
+        Category::firstOrCreate(['slug' => 'food'], [
             'parent_id' => $lifestyle->id,
             'name' => '美食',
-            'slug' => 'food',
             'description' => '美食分享',
             'status' => 'active',
             'order' => 1,
@@ -112,10 +105,9 @@ class CategorySeeder extends Seeder
             'icon' => 'cil-restaurant',
         ]);
 
-        Category::create([
+        Category::firstOrCreate(['slug' => 'travel'], [
             'parent_id' => $lifestyle->id,
             'name' => '旅遊',
-            'slug' => 'travel',
             'description' => '旅遊記錄',
             'status' => 'active',
             'order' => 2,
