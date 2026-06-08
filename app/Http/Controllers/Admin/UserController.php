@@ -91,6 +91,7 @@ class UserController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'is_active' => $request->boolean('is_active'),
         ]);
 
         $user->syncRoles($this->resolveRoles($validated['roles'] ?? [], $user));
@@ -133,12 +134,20 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
             'roles' => 'array',
+            'is_active' => 'boolean',
         ]);
 
-        $user->update([
+        $attributes = [
             'name' => $validated['name'],
             'email' => $validated['email'],
-        ]);
+        ];
+
+        // 不可把自己停用（避免自鎖）；僅在編輯他人時套用啟用狀態
+        if ($user->id !== auth()->id()) {
+            $attributes['is_active'] = $request->boolean('is_active');
+        }
+
+        $user->update($attributes);
 
         if (!empty($validated['password'])) {
             $user->update([
@@ -175,5 +184,24 @@ class UserController extends Controller
         flash_success('用戶刪除成功');
 
         return redirect()->route('admin.users.index');
+    }
+
+    /**
+     * 啟用 / 停用帳號。停用後該用戶無法登入，且在線 session 於下個請求即時登出。
+     */
+    public function toggleActive(User $user): RedirectResponse
+    {
+        $this->guardEngineer($user);
+
+        if ($user->id === auth()->id()) {
+            flash_error('無法停用目前登入的帳號');
+            return redirect()->back();
+        }
+
+        $user->update(['is_active' => ! $user->is_active]);
+
+        flash_success($user->is_active ? "已啟用「{$user->name}」" : "已停用「{$user->name}」");
+
+        return redirect()->back();
     }
 }

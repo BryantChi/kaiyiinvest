@@ -103,6 +103,29 @@
             </div>
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <strong>帳號狀態</strong>
+                </div>
+                <div class="card-body">
+                    @if($user->id === auth()->id())
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" checked disabled>
+                        <label class="form-check-label">啟用此帳號</label>
+                    </div>
+                    <div class="form-text text-muted">無法停用目前登入的帳號。</div>
+                    @else
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox"
+                               id="is_active" name="is_active" value="1"
+                               {{ old('is_active', $user->is_active) ? 'checked' : '' }}>
+                        <label class="form-check-label" for="is_active">啟用此帳號</label>
+                    </div>
+                    <div class="form-text">停用後將無法登入，且在線 session 會被即時登出。</div>
+                    @endif
+                </div>
+            </div>
+
+            <div class="card mt-3">
                 <div class="card-body">
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">

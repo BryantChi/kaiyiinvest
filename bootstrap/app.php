@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'setlocale' => \App\Http\Middleware\SetLocale::class,
             'detectlocale' => \App\Http\Middleware\DetectLocale::class,
             'engineer' => \App\Http\Middleware\EnsureEngineer::class,
+            'active' => \App\Http\Middleware\EnsureUserIsActive::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

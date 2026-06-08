@@ -68,6 +68,7 @@
                         <th>姓名</th>
                         <th>Email</th>
                         <th>角色</th>
+                        <th>狀態</th>
                         <th>建立時間</th>
                         <th class="text-end">操作</th>
                     </tr>
@@ -89,6 +90,13 @@
                             @endforeach
                             @if($user->roles->isEmpty())
                                 <span class="text-muted">無角色</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($user->is_active)
+                                <span class="badge bg-success">啟用</span>
+                            @else
+                                <span class="badge bg-secondary">停用</span>
                             @endif
                         </td>
                         <td>{{ $user->created_at->format('Y-m-d') }}</td>
@@ -114,6 +122,24 @@
                                         <use xlink:href="/assets/icons/free.svg#cil-pencil"></use>
                                     </svg>
                                 </a>
+
+                                @if($user->id !== auth()->id() && !$user->isEngineer())
+                                <form method="POST"
+                                      action="{{ route('admin.users.toggle-active', $user) }}"
+                                      class="d-inline"
+                                      onsubmit="return confirm('{{ $user->is_active ? '確定要停用「' . $user->name . '」嗎？停用後將無法登入。' : '確定要啟用「' . $user->name . '」嗎？' }}');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit"
+                                            class="btn btn-sm btn-light {{ $user->is_active ? 'text-secondary' : 'text-success' }}"
+                                            data-coreui-toggle="tooltip"
+                                            title="{{ $user->is_active ? '停用帳號' : '啟用帳號' }}">
+                                        <svg class="icon">
+                                            <use xlink:href="/assets/icons/free.svg#{{ $user->is_active ? 'cil-ban' : 'cil-check-circle' }}"></use>
+                                        </svg>
+                                    </button>
+                                </form>
+                                @endif
                                 @endcan
 
                                 @php

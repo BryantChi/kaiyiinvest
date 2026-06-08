@@ -29,7 +29,7 @@ use App\Http\Controllers\Admin\EngineerController;
 
 Route::prefix(config('admin.prefix', 'admin'))
     ->name('admin.')
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'active'])
     ->group(function () {
 
         // 儀表板
@@ -38,6 +38,9 @@ Route::prefix(config('admin.prefix', 'admin'))
 
         // 用戶管理
         Route::resource('users', UserController::class);
+
+        // 啟用/停用帳號（由控制器把關：不可停用自己/工程師）
+        Route::patch('users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggle-active');
 
         // 模擬登入（限 super-admin，由控制器把關）
         Route::post('users/{user}/impersonate', [ImpersonationController::class, 'start'])->name('users.impersonate');

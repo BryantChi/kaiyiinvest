@@ -42,6 +42,17 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($credentials, $remember)) {
+            // 帳號遭停用：登出並回報，不予放行
+            if (! Auth::user()->is_active) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                throw ValidationException::withMessages([
+                    'login' => '此帳號已被停用，請聯絡管理員。',
+                ]);
+            }
+
             $request->session()->regenerate();
 
             flash_success('登入成功');
