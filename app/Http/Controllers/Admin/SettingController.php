@@ -58,64 +58,8 @@ class SettingController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * 顯示 SEO 設定
-     */
-    public function seo(): View
-    {
-        $settings = Setting::getGroup('seo');
-
-        return view('admin.settings.seo', compact('settings'));
-    }
-
-    /**
-     * 更新 SEO 設定
-     */
-    public function updateSeo(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'seo_default_title' => 'required|string|max:255',
-            'seo_default_description' => 'required|string',
-            'seo_default_keywords' => 'nullable|string',
-            'seo_sitemap_enabled' => 'boolean',
-            'seo_robots_enabled' => 'boolean',
-        ]);
-
-        Setting::setMany($validated, 'seo');
-
-        flash_success('SEO 設定更新成功');
-
-        return redirect()->back();
-    }
-
-    /**
-     * 顯示分析設定
-     */
-    public function analytics(): View
-    {
-        $settings = Setting::getGroup('analytics');
-
-        return view('admin.settings.analytics', compact('settings'));
-    }
-
-    /**
-     * 更新分析設定
-     */
-    public function updateAnalytics(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'analytics_enabled' => 'boolean',
-            'analytics_google_id' => 'nullable|string',
-            'analytics_view_id' => 'nullable|string',
-            'analytics_track_admin' => 'boolean',
-        ]);
-
-        Setting::setMany($validated, 'analytics');
-
-        flash_success('分析設定更新成功');
-
-        return redirect()->back();
-    }
+    // 註：SEO 與分析（GA4/GTM）設定已整合至「SEO 管理 → 網站設定」（admin.seo.settings）；
+    //     原本的 seo()/updateSeo()/analytics()/updateAnalytics() 已移除，路由改為轉址。
 
     /**
      * 顯示郵件設定
@@ -155,9 +99,31 @@ class SettingController extends Controller
      */
     public function clearCache(): RedirectResponse
     {
-        \Illuminate\Support\Facades\Cache::flush();
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
 
-        flash_success('快取已清除');
+        flash_success('快取已清除（config / route / view / cache）');
+
+        return redirect()->back();
+    }
+
+    /**
+     * 發送測試郵件（驗證 SMTP 設定）
+     */
+    public function sendTestMail(Request $request): RedirectResponse
+    {
+        $validated = $request->validate(['email' => 'required|email']);
+
+        try {
+            \Illuminate\Support\Facades\Mail::raw(
+                "這是一封來自「" . config('app.name') . "」後台的測試郵件。\n寄送時間：" . now()->toDateTimeString(),
+                function ($m) use ($validated) {
+                    $m->to($validated['email'])->subject('【測試郵件】' . config('app.name'));
+                }
+            );
+            flash_success('測試郵件已發送至 ' . $validated['email'] . '（請檢查收件匣 / 開發環境看 storage/logs）');
+        } catch (\Throwable $e) {
+            flash_error('測試郵件發送失敗：' . $e->getMessage());
+        }
 
         return redirect()->back();
     }

@@ -116,13 +116,13 @@ Route::prefix(config('admin.prefix', 'admin'))
             // SEO 設定已整合至「SEO 管理 → 網站設定」；此處保留轉址避免舊連結失效
             Route::get('/seo', fn () => redirect()->route('admin.seo.settings'))->name('seo');
 
-            // 分析設定
-            Route::get('/analytics', [SettingController::class, 'analytics'])->name('analytics');
-            Route::put('/analytics', [SettingController::class, 'updateAnalytics'])->name('analytics.update');
+            // 分析（GA4/GTM）已整合至「SEO 管理 → 網站設定」；保留轉址避免舊連結失效
+            Route::get('/analytics', fn () => redirect()->route('admin.seo.settings'))->name('analytics');
 
             // 郵件設定
             Route::get('/mail', [SettingController::class, 'mail'])->name('mail');
             Route::put('/mail', [SettingController::class, 'updateMail'])->name('mail.update');
+            Route::post('/mail/test', [SettingController::class, 'sendTestMail'])->name('mail.test');
 
             // 快取管理
             Route::post('/clear-cache', [SettingController::class, 'clearCache'])->name('clear-cache');

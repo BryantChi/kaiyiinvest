@@ -92,13 +92,13 @@
                     </div>
                 </div>
                 <p class="card-text text-muted">
-                    Google Analytics、GTM、Facebook Pixel 等追蹤設定
+                    Google Analytics 4、GTM 已整合至「SEO 管理 → 網站設定」
                 </p>
-                <a href="{{ route('admin.settings.analytics') }}" class="btn btn-outline-info w-100">
+                <a href="{{ route('admin.seo.settings') }}" class="btn btn-outline-info w-100">
                     <svg class="icon me-2">
                         <use xlink:href="/assets/icons/free.svg#cil-arrow-right"></use>
                     </svg>
-                    前往設定
+                    前往 SEO 設定
                 </a>
             </div>
         </div>

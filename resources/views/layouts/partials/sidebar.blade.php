@@ -221,12 +221,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.settings.analytics') }}" href="{{ route('admin.settings.analytics') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    分析設定
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link {{ active_route('admin.settings.mail') }}" href="{{ route('admin.settings.mail') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
                     郵件設定

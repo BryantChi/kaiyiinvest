@@ -371,10 +371,13 @@
 @push('scripts')
 <script>
     function clearCache() {
-        if (confirm('確定要清除所有快取嗎？')) {
-            // 實作清除快取邏輯
-            alert('快取清除功能待實作');
-        }
+        if (!confirm('確定要清除所有快取嗎？')) return;
+        var f = document.createElement('form');
+        f.method = 'POST';
+        f.action = '{{ route("admin.settings.clear-cache") }}';
+        f.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}">';
+        document.body.appendChild(f);
+        f.submit();
     }
 </script>
 @endpush

@@ -410,10 +410,15 @@
 
     function testMail() {
         const email = prompt('請輸入測試郵件地址：');
-        if (email) {
-            // 實作發送測試郵件邏輯
-            alert('測試郵件發送功能待實作，將發送至：' + email);
-        }
+        if (!email) return;
+        var f = document.createElement('form');
+        f.method = 'POST';
+        f.action = '{{ route("admin.settings.mail.test") }}';
+        f.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}">'
+            + '<input type="hidden" name="email">';
+        f.querySelector('[name=email]').value = email;
+        document.body.appendChild(f);
+        f.submit();
     }
 
     // 頁面載入時初始化
