@@ -14,9 +14,12 @@
 @section('content')
     <!-- Hero Section -->
     <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="{{ asset('assets/img/hero/hero.mp4') }}" type="video/mp4">
-        </video>
+        {{-- poster 讓首屏瞬間顯示完整畫面；影片以 metadata 預載、faststart 邊下邊播。
+             手機載 720p 13MB 版、桌機載無損版，src 由下方 JS 依視窗寬度選擇（避免兩支都下載）。 --}}
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+               poster="{{ asset('assets/img/hero/hero-poster.jpg') }}?v=20260608"
+               data-src-desktop="{{ asset('assets/img/hero/hero.mp4') }}?v=20260608"
+               data-src-mobile="{{ asset('assets/img/hero/hero-mobile.mp4') }}?v=20260608"></video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">{{ cb('home', 'hero.title') }}<br><span class="text-gold">{{ cb('home', 'hero.title_highlight') }}</span></h1>
@@ -28,4 +31,18 @@
         </div>
     </section>
 @endsection
+
+@push('page-js')
+<script>
+    // 依視窗寬度載入對應 hero 影片來源：手機(<=768px)用輕量版，桌機用無損版。
+    // 只設定被選中的那一支，避免另一支也被下載。
+    (function () {
+        var v = document.querySelector('.hero-video');
+        if (!v) return;
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        v.src = isMobile ? v.dataset.srcMobile : v.dataset.srcDesktop;
+        v.load();
+    })();
+</script>
+@endpush
 

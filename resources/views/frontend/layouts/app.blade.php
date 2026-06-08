@@ -69,9 +69,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     {{-- Custom CSS --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v=20260608c">
     @stack('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260608">
     @stack('head')
 </head>
 
@@ -101,7 +101,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="{{ asset('assets/js/main.js') }}?v=20260605"></script>
+    <script src="{{ asset('assets/js/main.js') }}?v=20260608"></script>
     @stack('page-js')
 
     {{-- 結構化資料（JSON-LD / GEO·AEO）：由 SchemaService 依頁面+語系動態產生

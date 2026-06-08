@@ -1,19 +1,24 @@
 // Kaiyi International - Main JavaScript
 
-// Page Loader
-window.addEventListener('load', () => {
+// Page Loader：DOM 準備好即淡出，不等 hero 影片等重資產（避免遮罩卡住整頁）
+function hidePageLoader() {
     const loader = document.querySelector('.page-loader');
-    if (loader) {
-        // 最少顯示 500ms 確保載入動畫被看到
+    if (!loader) return;
+    // 最少顯示 500ms 確保載入動畫被看到
+    setTimeout(() => {
+        loader.classList.add('fade-out');
+        // 動畫結束後移除元素
         setTimeout(() => {
-            loader.classList.add('fade-out');
-            // 動畫結束後移除元素
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
+            loader.style.display = 'none';
         }, 500);
-    }
-});
+    }, 500);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hidePageLoader);
+} else {
+    hidePageLoader();
+}
 
 // Mobile Menu Toggle
 const mobileToggle = document.getElementById('mobileToggle');

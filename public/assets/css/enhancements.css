@@ -87,30 +87,6 @@ body::after {
     ) !important;
 }
 
-/* Hero 區塊底部柔和漸層 */
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(
-        to top,
-        rgba(248, 246, 240, 1) 0%,
-        rgba(248, 246, 240, 0.95) 10%,
-        rgba(248, 246, 240, 0.85) 20%,
-        rgba(248, 246, 240, 0.7) 35%,
-        rgba(248, 246, 240, 0.5) 50%,
-        rgba(248, 246, 240, 0.3) 65%,
-        rgba(248, 246, 240, 0.15) 80%,
-        rgba(248, 246, 240, 0.05) 90%,
-        rgba(248, 246, 240, 0) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-}
-
 .hero-content {
     z-index: 2;
 }
