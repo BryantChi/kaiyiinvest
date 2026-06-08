@@ -89,11 +89,17 @@ class Seo
         return (bool) self::get('noindex_site', false);
     }
 
+    /** 正式網域（APP_URL；sitemap/robots/llms 對外網址一律用它） */
+    public static function baseUrl(): string
+    {
+        return rtrim(config('app.url') ?: url('/'), '/');
+    }
+
     /** robots.txt 內容（後台可覆寫；預設禁 /api + 指向 sitemap） */
     public static function robotsTxt(): string
     {
         $custom = self::get('robots_txt');
-        return $custom ?: "User-agent: *\nDisallow: /api\n\nSitemap: " . url('/sitemap.xml') . "\n";
+        return $custom ?: "User-agent: *\nDisallow: /api\n\nSitemap: " . self::baseUrl() . "/sitemap.xml\n";
     }
 
     /** llms.txt 內容（後台可覆寫；預設提供豐富的 AEO 摘要） */
@@ -104,7 +110,7 @@ class Seo
             return $custom;
         }
 
-        $home = url('/');
+        $home = self::baseUrl() . '/';
         return <<<TXT
 # 楷懿國際投資 Kaiyi International Investment
 

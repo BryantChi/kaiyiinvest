@@ -17,6 +17,13 @@ class SitemapController extends Controller
      */
     public function sitemap(): Response
     {
+        // sitemap 一律使用正式網域（APP_URL），不跟隨存取主機（127.0.0.1 / localhost 等）
+        $base = rtrim(config('app.url'), '/');
+        \Illuminate\Support\Facades\URL::forceRootUrl($base);
+        if (\Illuminate\Support\Str::startsWith($base, 'https')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         $pages = Page::active()->ordered()->get();
         $locales = LocaleService::all();
 
