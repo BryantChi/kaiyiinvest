@@ -39,12 +39,8 @@ class SettingController extends Controller
      */
     public function updateGeneral(Request $request): RedirectResponse
     {
+        // 網站名稱/描述/關鍵字/Logo 已整合至 SEO 網站設定（前台讀 seo.*），此處不再重複管理。
         $validated = $request->validate([
-            'site_name' => 'required|string|max:255',
-            'site_description' => 'nullable|string',
-            'site_keywords' => 'nullable|string',
-            'site_logo' => 'nullable|string',
-            'site_favicon' => 'nullable|string',
             'admin_email' => 'required|email',
             'timezone' => 'required|string',
             'date_format' => 'required|string',

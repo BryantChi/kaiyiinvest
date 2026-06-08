@@ -14,33 +14,7 @@ class SettingSeeder extends Seeder
     {
         $settings = [
             // 一般設定
-            [
-                'group' => 'general',
-                'key' => 'site_name',
-                'value' => config('app.name'),
-                'type' => 'string',
-                'description' => '網站名稱',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'general',
-                'key' => 'site_description',
-                'value' => '一個通用的後台管理系統',
-                'type' => 'string',
-                'description' => '網站描述',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'general',
-                'key' => 'site_keywords',
-                'value' => 'laravel, admin, cms',
-                'type' => 'string',
-                'description' => '網站關鍵字',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
+            // 網站名稱/描述/關鍵字改由 SEO 網站設定（seo.*）單一管理，一般設定不再重複。
             [
                 'group' => 'general',
                 'key' => 'admin_email',
