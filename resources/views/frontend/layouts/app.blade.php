@@ -71,7 +71,7 @@
     {{-- Custom CSS --}}
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v=20260608c">
     @stack('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260608">
+    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260609f">
     @stack('head')
 </head>
 
