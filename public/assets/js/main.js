@@ -21,6 +21,9 @@ if (document.readyState === 'loading') {
 }
 
 // Mobile Menu Toggle
+// 漢堡選單斷點：須與 enhancements.css 的 max-width:1024px 保持一致
+// （長字語系如越南文／英文在平板寬度會撐破橫向選單，故 ≤1024 一律用抽屜）
+const MOBILE_NAV_MAX = 1024;
 const mobileToggle = document.getElementById('mobileToggle');
 const navMenu = document.getElementById('navMenu');
 
@@ -38,8 +41,8 @@ navLinks.forEach(li => {
 
     if (dropdown && link) {
         link.addEventListener('click', (e) => {
-            // 只在手機版時阻止預設行為
-            if (window.innerWidth <= 768) {
+            // 只在手機／平板（抽屜模式）時阻止預設行為
+            if (window.innerWidth <= MOBILE_NAV_MAX) {
                 e.preventDefault();
                 li.classList.toggle('dropdown-active');
 
@@ -57,7 +60,7 @@ navLinks.forEach(li => {
 // 點擊下拉選單項目後關閉手機選單
 document.querySelectorAll('.dropdown-item').forEach(item => {
     item.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= MOBILE_NAV_MAX) {
             navMenu.classList.remove('active');
             navLinks.forEach(li => li.classList.remove('dropdown-active'));
         }
