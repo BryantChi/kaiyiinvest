@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             FaqSeeder::class,
             // SEO/GEO/AEO（需 Page + Locale 先建立）
             SeoSeeder::class,
+            // 導覽列 / footer 選單英文內容（需 Locale 先建立）
+            NavContentSeeder::class,
         ]);
 
         $this->command->info('');
