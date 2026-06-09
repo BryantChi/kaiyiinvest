@@ -58,7 +58,7 @@
                         </div>
                         <div class="info-content">
                             <h4>{{ cb('contact','info.phone_label') }}</h4>
-                            <p>台灣 <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_tw')) }}">{{ cb('global','contact.phone_tw') }}</a><br>越南 <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_vn')) }}">{{ cb('global','contact.phone_vn') }}</a></p>
+                            <p>{{ cb('global','contact.label_tw') }} <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_tw')) }}">{{ cb('global','contact.phone_tw') }}</a><br>{{ cb('global','contact.label_vn') }} <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_vn')) }}">{{ cb('global','contact.phone_vn') }}</a></p>
                         </div>
                     </div>
 
@@ -110,37 +110,38 @@
                     <form class="contact-form" id="contactForm" method="POST" action="{{ localized_route('frontend.contact.store') }}">
                         @csrf
                         <div class="form-group">
-                            <label for="name">姓名 *</label>
+                            <label for="name">{{ cb('contact', 'form.name_label') }} *</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="email">電子郵件 *</label>
+                                <label for="email">{{ cb('contact', 'form.email_label') }} *</label>
                                 <input type="email" id="email" name="email" value="{{ old('email') }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">聯絡電話</label>
+                                <label for="phone">{{ cb('contact', 'form.phone_label') }}</label>
                                 <input type="tel" id="phone" name="phone" value="{{ old('phone') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">主旨 *</label>
+                            <label for="subject">{{ cb('contact', 'form.subject_label') }} *</label>
                             <select id="subject" name="subject" required>
-                                <option value="">請選擇諮詢主題</option>
-                                @foreach(['不動產代理' => '不動產代理項目', '工業地產' => '工業地產', '專業諮詢' => '專業諮詢', '其他服務' => '其他服務', '一般詢問' => '一般詢問'] as $val => $label)
-                                <option value="{{ $val }}" {{ old('subject') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                                <option value="">{{ cb('contact', 'form.subject_placeholder') }}</option>
+                                {{-- 鍵=送出/儲存的值（保持中文不變，避免影響既有資料與信件）；值=顯示用的 cb key（多語） --}}
+                                @foreach(['不動產代理' => 'form.opt_real_estate', '工業地產' => 'form.opt_industrial', '專業諮詢' => 'form.opt_consulting', '其他服務' => 'form.opt_other', '一般詢問' => 'form.opt_general'] as $val => $optKey)
+                                <option value="{{ $val }}" {{ old('subject') === $val ? 'selected' : '' }}>{{ cb('contact', $optKey) }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">訊息內容 *</label>
+                            <label for="message">{{ cb('contact', 'form.message_label') }} *</label>
                             <textarea id="message" name="message" rows="6" required>{{ old('message') }}</textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-lg">送出訊息</button>
+                        <button type="submit" class="btn btn-primary btn-lg">{{ cb('contact', 'form.submit') }}</button>
                     </form>
                 </div>
             </div>
