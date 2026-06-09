@@ -17,7 +17,9 @@ class EnsureUserIsActive
     {
         $user = $request->user();
 
-        if ($user && ! $user->is_active) {
+        // 僅在「明確被停用(=== false)」時登出；欄位不存在/為 null 時不誤鎖
+        // （避免部署早於 migration 時整個後台被鎖死）。
+        if ($user && $user->is_active === false) {
             Auth::logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

@@ -42,8 +42,8 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($credentials, $remember)) {
-            // 帳號遭停用：登出並回報，不予放行
-            if (! Auth::user()->is_active) {
+            // 帳號遭停用：登出並回報，不予放行（僅明確為 false 才擋，欄位缺失時不誤擋）
+            if (Auth::user()->is_active === false) {
                 Auth::logout();
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();
