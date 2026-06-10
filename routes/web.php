@@ -40,7 +40,8 @@ $frontendRoutes = function () {
     Route::get('/partners', [PageController::class, 'partners'])->name('partners');
     Route::get('/faq', [PageController::class, 'faq'])->name('faq');
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    // throttle:5,1 — 每 IP 每分鐘最多 5 次送出，防洗版/灌信
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 };
 
 // 預設語系（無前綴）：先偵測訪客語系（首次自動導向 + cookie 記住），再設 locale

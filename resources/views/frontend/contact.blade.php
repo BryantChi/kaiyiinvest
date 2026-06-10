@@ -109,6 +109,11 @@
                     @endif
                     <form class="contact-form" id="contactForm" method="POST" action="{{ localized_route('frontend.contact.store') }}">
                         @csrf
+                        {{-- 蜜罐：人類看不到也不會填；機器人常自動填入。後端偵測到有值即視為灌水並靜默丟棄 --}}
+                        <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="form-group">
                             <label for="name">{{ cb('contact', 'form.name_label') }} *</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required>
