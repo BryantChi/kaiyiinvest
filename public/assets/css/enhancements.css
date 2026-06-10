@@ -478,17 +478,27 @@ body::after {
 }
 
 .hero-title {
-    /* 整體再下修一級（手機～桌機一致縮小）：上限 4.75rem→4rem，斜率 4vw→3vw */
-    font-size: clamp(1.7rem, 1rem + 3vw, 4rem);
+    /* 桌機再下修一級：上限 4rem→3.4rem，斜率 3vw→2.6vw */
+    font-size: clamp(1.7rem, 1rem + 2.6vw, 3.4rem);
     line-height: 1.2;
+    /* 只在必要時換行於「字與字之間」，不從字中硬切（避免越南文單字被切斷）；
+       text-wrap: balance 讓各行長度平均，斷行更自然 */
     overflow-wrap: break-word;
-    word-break: break-word;
     text-wrap: balance;
 }
 
 .hero-subtitle {
     font-size: clamp(0.95rem, 0.6rem + 1.1vw, 1.3rem);
     overflow-wrap: break-word;
+}
+
+/* 越南文 hero 標題：桌機（非漢堡選單）讓 <br> 分隔的兩段各自不換行，
+   像中文一樣穩定兩行；字級上限收到能容下最長那段（約 33 字）的大小 */
+@media (min-width: 1025px) {
+    html[lang="vi"] .hero-title {
+        font-size: clamp(2.2rem, 1.2rem + 1.6vw, 3rem);
+        white-space: nowrap;
+    }
 }
 
 /* ---- 內頁標題列：補左右留白（副標不再貼邊）＋字級協調 ---- */
@@ -510,8 +520,8 @@ body::after {
     color: var(--gold);
     font-size: clamp(1.85rem, 1rem + 3.2vw, 3.5rem);
     line-height: 1.25;
+    /* 同 hero：不從字中硬切，避免越南文單字被切斷 */
     overflow-wrap: break-word;
-    word-break: break-word;
     text-wrap: balance;
 }
 
