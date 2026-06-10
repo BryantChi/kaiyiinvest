@@ -31,3 +31,8 @@ yarn-error.log
 
 # 開發日誌
 /storage/logs/*.log
+
+# 框架執行期產物（快取／Session／編譯後 view，不進版控）
+/storage/framework/cache/data
+/storage/framework/sessions/*
+/storage/framework/views/*.php
