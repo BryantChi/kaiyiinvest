@@ -12,7 +12,7 @@
 @section('twitter_description', '聯絡楷懿國際投資 — 越南河內、海防據點，台灣／越南聯絡電話與 Email。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}?v=20260610">
 @endpush
 
 @section('content')

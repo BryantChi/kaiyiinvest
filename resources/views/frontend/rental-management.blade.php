@@ -14,8 +14,8 @@
 @section('twitter_description', '楷懿專業包租代管服務，提供越南不動產的租賃管理、收益優化與一站式託管。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260605">
-    <link rel="stylesheet" href="{{ asset('assets/css/rental-management.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260610">
+    <link rel="stylesheet" href="{{ asset('assets/css/rental-management.css') }}?v=20260610">
 @endpush
 
 @section('content')

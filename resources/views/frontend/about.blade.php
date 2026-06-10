@@ -12,7 +12,7 @@
 @section('twitter_description', '認識楷懿國際投資的企業理念、公司沿革與專業團隊，以「專業・責任・價值」服務跨國不動產投資客戶。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/about.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/about.css') }}?v=20260610">
 @endpush
 
 @section('content')

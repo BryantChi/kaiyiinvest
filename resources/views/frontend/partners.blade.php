@@ -12,7 +12,7 @@
 @section('twitter_description', '楷懿國際投資的集團企業與合作夥伴，整合集團資源、創造綜效價值。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/partners.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/partners.css') }}?v=20260610">
 @endpush
 
 @section('content')

@@ -12,7 +12,7 @@
 @section('twitter_description', '楷懿不動產常見問題 — 簽約、產權、稅費、貸款、外國人購屋等專業解答。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/faq.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/faq.css') }}?v=20260610">
 @endpush
 
 @section('content')

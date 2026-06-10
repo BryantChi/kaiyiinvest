@@ -62,16 +62,16 @@
 
     {{-- Google Fonts --}}
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Cinzel:wght@400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap"
         rel="stylesheet">
 
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     {{-- Custom CSS --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v=20260608c">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}?v=20260610">
     @stack('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260609f">
+    <link rel="stylesheet" href="{{ asset('assets/css/enhancements.css') }}?v=20260610">
     @stack('head')
 </head>
 

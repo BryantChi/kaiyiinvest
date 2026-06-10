@@ -12,7 +12,7 @@
 @section('twitter_description', '楷懿四大業務領域 — 不動產代理、工業地產、專業諮詢與其他服務，提供完整的越南不動產投資解決方案。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260610">
 @endpush
 
 @section('content')

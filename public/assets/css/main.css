@@ -17,6 +17,14 @@
     --gray: #666666;
     --white: #FFFFFF;
     --cream: #F8F6F0;
+    /* 標題裝飾字體：Cinzel 無越南文字形，預設拉丁語系用 Cinzel */
+    --font-display: 'Cinzel', serif;
+}
+
+/* 越南文標題改用支援越南文 subset 的 Cormorant Garamond，
+   避免變音字元（ế ữ ơ ặ…）在 Cinzel 缺字形時掉回預設 serif 造成字體混雜 */
+html[lang="vi"] {
+    --font-display: 'Cormorant Garamond', serif;
 }
 
 html {
@@ -51,7 +59,7 @@ body {
 }
 
 .loader-logo {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 3rem;
     color: var(--gold);
     font-weight: 700;
@@ -154,7 +162,7 @@ body {
 }
 
 .logo-main {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 1.65rem;
     color: var(--gold);
     /* color: var(--white); */
@@ -330,7 +338,7 @@ body {
 }
 
 .hero-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(2.25rem, 4vw + 1.25rem, 5rem);
     color: var(--white);
     margin-bottom: 1.5rem;
@@ -415,7 +423,7 @@ body {
 }
 
 .section-title {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(1.75rem, 2.5vw + 1rem, 3rem);
     color: var(--black);
     line-height: 1.25;
@@ -510,7 +518,7 @@ body {
 }
 
 .cta-content h2 {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(1.75rem, 2.5vw + 1rem, 3rem);
     color: var(--white);
     margin-bottom: 1.5rem;

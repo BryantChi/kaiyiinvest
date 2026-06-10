@@ -33,7 +33,7 @@
 }
 
 .page-header-content h1 {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem);
     margin-bottom: 1rem;
     color: var(--gold);
@@ -332,7 +332,7 @@
     font-weight: 700;
     color: var(--white);
     margin-bottom: 1rem;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     line-height: 1.25;
 }
 

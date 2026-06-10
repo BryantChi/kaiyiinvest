@@ -17,8 +17,8 @@
 @section('twitter_description', '楷懿國際投資的工業區開發招商服務，從選址、開發到招商的專業流程，協助企業布局越南工業地產。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260605">
-    <link rel="stylesheet" href="{{ asset('assets/css/industrial-development.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/services.css') }}?v=20260610">
+    <link rel="stylesheet" href="{{ asset('assets/css/industrial-development.css') }}?v=20260610">
 @endpush
 
 @section('content')
