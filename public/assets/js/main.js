@@ -20,6 +20,20 @@ if (document.readyState === 'loading') {
     hidePageLoader();
 }
 
+// 動態同步固定導覽列實際高度到 --nav-h（CSS 寫死 78/88px 會因語系、字體載入、視窗寬度對不上而產生縫隙）
+function syncNavHeight() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    document.documentElement.style.setProperty('--nav-h', navbar.offsetHeight + 'px');
+}
+
+syncNavHeight();
+window.addEventListener('load', syncNavHeight); // 字體載入後高度可能改變
+window.addEventListener('resize', syncNavHeight);
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncNavHeight);
+}
+
 // Mobile Menu Toggle
 // 漢堡選單斷點：須與 enhancements.css 的 max-width:1024px 保持一致
 // （長字語系如越南文／英文在平板寬度會撐破橫向選單，故 ≤1024 一律用抽屜）

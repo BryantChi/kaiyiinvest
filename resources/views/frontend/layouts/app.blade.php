@@ -101,7 +101,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="{{ asset('assets/js/main.js') }}?v=20260609a"></script>
+    <script src="{{ asset('assets/js/main.js') }}?v=20260611"></script>
     @stack('page-js')
 
     {{-- 結構化資料（JSON-LD / GEO·AEO）：由 SchemaService 依頁面+語系動態產生
