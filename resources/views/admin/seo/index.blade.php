@@ -2,351 +2,109 @@
 
 @section('title', 'SEO 管理')
 
-@php
-    $breadcrumbs = [
-        ['title' => 'SEO 管理', 'url' => '#']
-    ];
-@endphp
+@php $breadcrumbs = [['title' => 'SEO 管理', 'url' => '#']]; @endphp
 
 @section('content')
 <div class="row mb-4">
     <div class="col-12">
         <h2 class="mb-0">SEO 管理</h2>
-        <p class="text-muted">搜尋引擎優化工具與設定</p>
+        <p class="text-muted">搜尋引擎優化（SEO）+ 生成式引擎（GEO）+ 答案引擎（AEO）</p>
     </div>
 </div>
 
+{{-- 統計卡 --}}
 <div class="row">
+    @php
+        $cards = [
+            ['頁面數', $stats['pages'], 'cil-globe-alt', 'primary', route('admin.seo.pages'), '頁面 SEO'],
+            ['Sitemap URL', $stats['sitemap_urls'], 'cil-sitemap', 'success', route('admin.seo.sitemap'), 'Sitemap'],
+            ['SEO 涵蓋率', $stats['coverage'] . '%', 'cil-check-circle', 'info', route('admin.seo.pages'), '前往補齊'],
+            ['FAQ（AEO）', $stats['faqs'], 'cil-list-rich', 'warning', route('admin.faqs.index'), 'FAQ 管理'],
+        ];
+    @endphp
+    @foreach($cards as [$label, $value, $icon, $color, $url, $link])
     <div class="col-lg-3 col-md-6">
         <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 bg-primary bg-opacity-10 p-3 rounded">
-                        <svg class="icon icon-xl text-primary">
-                            <use xlink:href="/assets/icons/free.svg#cil-tags"></use>
-                        </svg>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fs-6 fw-semibold">{{ $stats['total_meta'] ?? 0 }}</div>
-                        <div class="text-muted small">Meta Tags</div>
-                    </div>
+            <div class="card-body d-flex align-items-center">
+                <div class="bg-{{ $color }} bg-opacity-10 p-3 rounded">
+                    <svg class="icon icon-xl text-{{ $color }}"><use xlink:href="/assets/icons/free.svg#{{ $icon }}"></use></svg>
+                </div>
+                <div class="ms-3">
+                    <div class="fs-5 fw-semibold">{{ $value }}</div>
+                    <div class="text-muted small">{{ $label }}</div>
                 </div>
             </div>
             <div class="card-footer border-top-0 bg-transparent">
-                <a href="{{ route('admin.seo.meta') }}" class="text-decoration-none small">
-                    管理 Meta Tags →
-                </a>
+                <a href="{{ $url }}" class="text-decoration-none small">{{ $link }} →</a>
             </div>
         </div>
     </div>
-
-    <div class="col-lg-3 col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 bg-success bg-opacity-10 p-3 rounded">
-                        <svg class="icon icon-xl text-success">
-                            <use xlink:href="/assets/icons/free.svg#cil-sitemap"></use>
-                        </svg>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fs-6 fw-semibold">{{ $stats['sitemap_urls'] ?? 0 }}</div>
-                        <div class="text-muted small">Sitemap URLs</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer border-top-0 bg-transparent">
-                <a href="{{ route('admin.seo.sitemap-settings') }}" class="text-decoration-none small">
-                    Sitemap 設定 →
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 bg-info bg-opacity-10 p-3 rounded">
-                        <svg class="icon icon-xl text-info">
-                            <use xlink:href="/assets/icons/free.svg#cil-settings"></use>
-                        </svg>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fs-6 fw-semibold">{{ $stats['robots_rules'] ?? 0 }}</div>
-                        <div class="text-muted small">Robots Rules</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer border-top-0 bg-transparent">
-                <a href="{{ route('admin.seo.robots-txt') }}" class="text-decoration-none small">
-                    編輯 Robots.txt →
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-3 col-md-6">
-        <div class="card mb-4">
-            <div class="card-body">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 bg-warning bg-opacity-10 p-3 rounded">
-                        <svg class="icon icon-xl text-warning">
-                            <use xlink:href="/assets/icons/free.svg#cil-chart-line"></use>
-                        </svg>
-                    </div>
-                    <div class="flex-grow-1 ms-3">
-                        <div class="fs-6 fw-semibold">{{ $stats['seo_score'] ?? 0 }}%</div>
-                        <div class="text-muted small">SEO 評分</div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer border-top-0 bg-transparent">
-                <a href="{{ route('admin.seo.analyze') }}" class="text-decoration-none small">
-                    SEO 分析 →
-                </a>
-            </div>
-        </div>
-    </div>
+    @endforeach
 </div>
 
 <div class="row">
-    <div class="col-lg-8">
-        <div class="card">
-            <div class="card-header">
-                <strong>快速操作</strong>
-            </div>
+    <div class="col-lg-7">
+        <div class="card mb-4">
+            <div class="card-header"><strong>SEO 工具</strong></div>
             <div class="card-body">
                 <div class="list-group list-group-flush">
-                    <a href="{{ route('admin.seo.meta') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    @php
+                        $tools = [
+                            [route('admin.seo.settings'), '網站 SEO 設定', 'GA4 / GTM / Search Console 驗證 / 預設 Meta 與 OG 圖', 'cil-settings'],
+                            [route('admin.seo.pages'), '頁面 SEO（每頁每語系）', 'Meta / OG / Twitter / JSON-LD 結構化資料', 'cil-globe-alt'],
+                            [route('admin.seo.sitemap'), 'Sitemap', '多語 sitemap.xml + 通知搜尋引擎', 'cil-sitemap'],
+                            [route('admin.seo.robots-txt'), 'robots.txt', '爬蟲規則', 'cil-shield-alt'],
+                            [route('admin.seo.llms-txt'), 'llms.txt（AEO）', '提供 AI / 答案引擎的站點摘要', 'cil-brain'],
+                            [route('admin.seo.analyze'), 'SEO 分析', '檢查缺漏與優化建議', 'cil-chart-line'],
+                        ];
+                    @endphp
+                    @foreach($tools as [$url, $title, $desc, $icon])
+                    <a href="{{ $url }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                         <div>
-                            <svg class="icon me-2 text-primary">
-                                <use xlink:href="/assets/icons/free.svg#cil-tags"></use>
-                            </svg>
-                            <strong>Meta Tags 管理</strong>
-                            <p class="mb-0 small text-muted">管理頁面 Meta 標籤、Open Graph 和 Twitter Cards</p>
+                            <svg class="icon me-2 text-primary"><use xlink:href="/assets/icons/free.svg#{{ $icon }}"></use></svg>
+                            <strong>{{ $title }}</strong>
+                            <div class="small text-muted ms-4 ps-2">{{ $desc }}</div>
                         </div>
-                        <svg class="icon">
-                            <use xlink:href="/assets/icons/free.svg#cil-chevron-right"></use>
-                        </svg>
+                        <svg class="icon"><use xlink:href="/assets/icons/free.svg#cil-chevron-right"></use></svg>
                     </a>
-
-                    <a href="{{ route('admin.seo.sitemap-settings') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <div>
-                            <svg class="icon me-2 text-success">
-                                <use xlink:href="/assets/icons/free.svg#cil-sitemap"></use>
-                            </svg>
-                            <strong>Sitemap 設定</strong>
-                            <p class="mb-0 small text-muted">配置 XML Sitemap 自動生成規則</p>
-                        </div>
-                        <svg class="icon">
-                            <use xlink:href="/assets/icons/free.svg#cil-chevron-right"></use>
-                        </svg>
-                    </a>
-
-                    <a href="{{ route('admin.seo.robots-txt') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <div>
-                            <svg class="icon me-2 text-info">
-                                <use xlink:href="/assets/icons/free.svg#cil-settings"></use>
-                            </svg>
-                            <strong>Robots.txt 編輯</strong>
-                            <p class="mb-0 small text-muted">編輯搜尋引擎爬蟲規則</p>
-                        </div>
-                        <svg class="icon">
-                            <use xlink:href="/assets/icons/free.svg#cil-chevron-right"></use>
-                        </svg>
-                    </a>
-
-                    <a href="{{ route('admin.seo.analyze') }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                        <div>
-                            <svg class="icon me-2 text-warning">
-                                <use xlink:href="/assets/icons/free.svg#cil-chart-line"></use>
-                            </svg>
-                            <strong>SEO 分析</strong>
-                            <p class="mb-0 small text-muted">檢查網站 SEO 狀況並取得優化建議</p>
-                        </div>
-                        <svg class="icon">
-                            <use xlink:href="/assets/icons/free.svg#cil-chevron-right"></use>
-                        </svg>
-                    </a>
+                    @endforeach
                 </div>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="card-header">
-                <strong>最近的 SEO 活動</strong>
-            </div>
-            <div class="card-body p-0">
-                @if(isset($recent_activities) && count($recent_activities) > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>時間</th>
-                                <th>活動</th>
-                                <th>頁面</th>
-                                <th>操作者</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($recent_activities as $activity)
-                            <tr>
-                                <td>{{ $activity['time'] ?? '-' }}</td>
-                                <td>{{ $activity['action'] ?? '-' }}</td>
-                                <td>{{ $activity['page'] ?? '-' }}</td>
-                                <td>{{ $activity['user'] ?? '-' }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                @else
-                <div class="p-4 text-center text-muted">
-                    暫無 SEO 活動記錄
-                </div>
-                @endif
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4">
-        <div class="card">
-            <div class="card-header">
-                <strong>SEO 工具</strong>
-            </div>
+    <div class="col-lg-5">
+        <div class="card mb-4">
+            <div class="card-header"><strong>站台健檢</strong></div>
             <div class="card-body">
-                <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-outline-primary" onclick="generateSitemap()">
-                        <svg class="icon me-2">
-                            <use xlink:href="/assets/icons/free.svg#cil-reload"></use>
-                        </svg>
-                        重新生成 Sitemap
-                    </button>
-
-                    <button type="button" class="btn btn-outline-success" onclick="submitSitemap()">
-                        <svg class="icon me-2">
-                            <use xlink:href="/assets/icons/free.svg#cil-paper-plane"></use>
-                        </svg>
-                        提交到搜尋引擎
-                    </button>
-
-                    <button type="button" class="btn btn-outline-info" onclick="checkIndexing()">
-                        <svg class="icon me-2">
-                            <use xlink:href="/assets/icons/free.svg#cil-search"></use>
-                        </svg>
-                        檢查索引狀態
-                    </button>
-
-                    <button type="button" class="btn btn-outline-warning" onclick="analyzeSeo()">
-                        <svg class="icon me-2">
-                            <use xlink:href="/assets/icons/free.svg#cil-chart-line"></use>
-                        </svg>
-                        執行 SEO 分析
-                    </button>
+                @php
+                    $checks = [
+                        ['GA4 / GTM 分析', $status['ga4'] || $status['gtm']],
+                        ['Google Search Console 驗證', $status['google_verify']],
+                        ['Bing 驗證', $status['bing_verify']],
+                        ['社群連結 sameAs', $status['sameas'] > 0],
+                        ['頁面 SEO 涵蓋', $stats['coverage'] >= 100],
+                    ];
+                @endphp
+                @foreach($checks as [$label, $ok])
+                <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                    <span class="small">{{ $label }}</span>
+                    @if($ok)
+                        <span class="badge bg-success">已設定</span>
+                    @else
+                        <span class="badge bg-secondary">未設定</span>
+                    @endif
                 </div>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="card-header">
-                <strong>SEO 健康度</strong>
-            </div>
-            <div class="card-body">
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="small">Meta Tags 覆蓋率</span>
-                        <span class="small fw-semibold">{{ $health['meta_coverage'] ?? 0 }}%</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $health['meta_coverage'] ?? 0 }}%"></div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="small">圖片 Alt 標籤</span>
-                        <span class="small fw-semibold">{{ $health['image_alt'] ?? 0 }}%</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ $health['image_alt'] ?? 0 }}%"></div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="small">內部連結品質</span>
-                        <span class="small fw-semibold">{{ $health['internal_links'] ?? 0 }}%</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $health['internal_links'] ?? 0 }}%"></div>
-                    </div>
-                </div>
-
-                <div class="mb-0">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span class="small">頁面載入速度</span>
-                        <span class="small fw-semibold">{{ $health['page_speed'] ?? 0 }}%</span>
-                    </div>
-                    <div class="progress" style="height: 8px;">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $health['page_speed'] ?? 0 }}%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mt-4">
-            <div class="card-header">
-                <strong>SEO 提示</strong>
-            </div>
-            <div class="card-body">
-                <div class="alert alert-info mb-2">
-                    <small>💡 定期更新 Sitemap 可以幫助搜尋引擎更快發現新內容</small>
-                </div>
-                <div class="alert alert-warning mb-2">
-                    <small>⚠️ 確保所有頁面都有獨特的 Meta 描述</small>
-                </div>
-                <div class="alert alert-success mb-0">
-                    <small>✓ 使用語義化的 HTML 標籤提升 SEO 效果</small>
+                @endforeach
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between mb-1"><span class="small">頁面 SEO 涵蓋率</span><span class="small fw-semibold">{{ $stats['coverage'] }}%</span></div>
+                    <div class="progress" style="height:8px;"><div class="progress-bar bg-success" style="width: {{ min($stats['coverage'],100) }}%"></div></div>
+                    <div class="text-muted small mt-1">{{ $stats['page_seo'] }} / {{ $stats['pages'] * $stats['locales'] }}（頁面 × 語系）</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@push('scripts')
-<script>
-    function generateSitemap() {
-        if (confirm('確定要重新生成 Sitemap 嗎？')) {
-            // 實作 Sitemap 生成邏輯
-            alert('Sitemap 生成功能待實作');
-        }
-    }
-
-    function submitSitemap() {
-        if (confirm('確定要提交 Sitemap 到搜尋引擎嗎？')) {
-            // 實作提交邏輯
-            alert('Sitemap 提交功能待實作');
-        }
-    }
-
-    function checkIndexing() {
-        // 實作索引檢查邏輯
-        alert('索引檢查功能待實作');
-    }
-
-    function analyzeSeo() {
-        window.location.href = '{{ route("admin.seo.analyze") }}';
-    }
-</script>
-@endpush
-
-@push('styles')
-<style>
-    .icon-xl {
-        width: 2.5rem;
-        height: 2.5rem;
-    }
-</style>
-@endpush
+@push('styles')<style>.icon-xl{width:2.2rem;height:2.2rem;}</style>@endpush
 @endsection

@@ -23,6 +23,7 @@ Route::get('/lang/{code}', [LocaleController::class, 'switch'])->name('frontend.
 
 // 站台級 SEO 檔案（公開、動態產生）
 Route::get('/sitemap.xml', [SitemapController::class, 'sitemap'])->name('sitemap');
+Route::get('/sitemap.xsl', [SitemapController::class, 'sitemapStyle'])->name('sitemap.xsl');
 Route::get('/robots.txt', [SitemapController::class, 'robots'])->name('robots');
 Route::get('/llms.txt', [SitemapController::class, 'llms'])->name('llms');
 
@@ -39,7 +40,8 @@ $frontendRoutes = function () {
     Route::get('/partners', [PageController::class, 'partners'])->name('partners');
     Route::get('/faq', [PageController::class, 'faq'])->name('faq');
     Route::get('/contact', [ContactController::class, 'show'])->name('contact');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    // throttle:5,1 — 每 IP 每分鐘最多 5 次送出，防洗版/灌信
+    Route::post('/contact', [ContactController::class, 'store'])->middleware('throttle:5,1')->name('contact.store');
 };
 
 // 預設語系（無前綴）：先偵測訪客語系（首次自動導向 + cookie 記住），再設 locale

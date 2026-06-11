@@ -8,5 +8,5 @@ use Illuminate\Support\Facades\Schedule;
 Schedule::command('geoip:download')
     ->name('geoip-download')
     ->monthly()
-    ->when(fn () => filled(env('MAXMIND_LICENSE_KEY')))
+    ->when(fn () => filled(config('geoip.license_key')))
     ->onOneServer();

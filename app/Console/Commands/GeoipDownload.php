@@ -20,7 +20,7 @@ class GeoipDownload extends Command
 
     public function handle(): int
     {
-        $key = env('MAXMIND_LICENSE_KEY');
+        $key = config('geoip.license_key');
         if (blank($key)) {
             $this->error('未設定 MAXMIND_LICENSE_KEY，無法下載。');
             return self::FAILURE;

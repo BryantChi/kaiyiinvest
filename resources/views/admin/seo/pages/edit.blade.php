@@ -55,9 +55,12 @@
                     <div class="mb-3">
                         <label class="form-label">{{ $label }}</label>
                         @if($type === 'textarea')
-                        <textarea name="{{ $name }}" rows="3" class="form-control @error($name) is-invalid @enderror">{{ old($name, $seo->$name ?? '') }}</textarea>
+                        <textarea name="{{ $name }}" rows="3" class="form-control @error($name) is-invalid @enderror" @if(in_array($name, ['meta_title','meta_description'])) data-seo-counter="{{ $name }}" @endif>{{ old($name, $seo->$name ?? '') }}</textarea>
                         @else
-                        <input type="text" name="{{ $name }}" class="form-control @error($name) is-invalid @enderror" value="{{ old($name, $seo->$name ?? '') }}">
+                        <input type="text" name="{{ $name }}" class="form-control @error($name) is-invalid @enderror" value="{{ old($name, $seo->$name ?? '') }}" @if(in_array($name, ['meta_title','meta_description'])) data-seo-counter="{{ $name }}" @endif>
+                        @endif
+                        @if(in_array($name, ['meta_title','meta_description']))
+                        <div class="form-text seo-counter" data-counter-for="{{ $name }}"></div>
                         @endif
                         @error($name)<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
@@ -123,4 +126,32 @@
         </div>
     </div>
 </form>
+
+@push('scripts')
+<script>
+    (function () {
+        var limits = {
+            meta_title: { min: {{ config('seo.limits.title.min') }}, rec: {{ config('seo.limits.title.recommended') }}, max: {{ config('seo.limits.title.max') }} },
+            meta_description: { min: {{ config('seo.limits.description.min') }}, rec: {{ config('seo.limits.description.recommended') }}, max: {{ config('seo.limits.description.max') }} }
+        };
+        document.querySelectorAll('[data-seo-counter]').forEach(function (el) {
+            var key = el.getAttribute('data-seo-counter');
+            var lim = limits[key];
+            var out = document.querySelector('[data-counter-for="' + key + '"]');
+            if (!lim || !out) return;
+            function update() {
+                var n = (el.value || '').length;
+                var ok = n >= lim.min && n <= lim.rec;
+                var warn = n > lim.rec && n <= lim.max;
+                var color = ok ? '#2e7d32' : (warn || (n > 0 && n < lim.min) ? '#b8860b' : (n > lim.max ? '#c62828' : '#888'));
+                out.style.color = color;
+                out.textContent = n + ' 字元（建議 ' + lim.min + '–' + lim.rec + '）'
+                    + (n > lim.max ? ' · 過長' : (n > 0 && n < lim.min ? ' · 偏短' : (ok ? ' · 適中' : '')));
+            }
+            el.addEventListener('input', update);
+            update();
+        });
+    })();
+</script>
+@endpush
 @endsection

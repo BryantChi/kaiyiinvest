@@ -30,7 +30,7 @@ class EngineerController extends Controller
             'php' => PHP_VERSION,
             'env' => app()->environment(),
             'debug' => config('app.debug') ? '開啟' : '關閉',
-            'maxmind_key' => filled(env('MAXMIND_LICENSE_KEY')),
+            'maxmind_key' => filled(config('geoip.license_key')),
             'geoip_db' => $dbPath && file_exists($dbPath),
             'maintenance' => app()->isDownForMaintenance(),
         ];
@@ -77,6 +77,13 @@ class EngineerController extends Controller
 
                 case 'migrate':
                     Artisan::call('migrate', ['--force' => true]);
+                    $output = Artisan::output();
+                    break;
+
+                case 'seed':
+                    // 寫死只跑 db:seed --force：所有 seeder 皆 firstOrCreate，僅補建缺少資料、不覆寫既有內容。
+                    // 刻意不支援 migrate:fresh / --seed，避免清庫風險。
+                    Artisan::call('db:seed', ['--force' => true]);
                     $output = Artisan::output();
                     break;
 

@@ -161,12 +161,13 @@ HTML,
         ];
 
         foreach ($items as $item) {
-            $faq = Faq::updateOrCreate(
+            // firstOrCreate：FAQ 已存在則保留後台編輯內容，不覆寫；僅補建缺少的項目
+            $faq = Faq::firstOrCreate(
                 ['order' => $item['order']],
                 ['category' => $item['category'], 'is_active' => true]
             );
 
-            $faq->translations()->updateOrCreate(
+            $faq->translations()->firstOrCreate(
                 ['locale' => 'zh-TW'],
                 ['question' => $item['question'], 'answer' => $item['answer']]
             );

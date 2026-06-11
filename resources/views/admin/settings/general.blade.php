@@ -19,110 +19,29 @@
 
 <form method="POST" action="{{ route('admin.settings.general.update') }}" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
 
     <div class="row">
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
-                    <strong>網站資訊</strong>
+                    <strong>管理員</strong>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <label for="site_name" class="form-label">網站名稱 <span class="text-danger">*</span></label>
-                        <input type="text"
-                               class="form-control @error('site_name') is-invalid @enderror"
-                               id="site_name"
-                               name="site_name"
-                               value="{{ old('site_name', setting('site_name', '')) }}"
-                               required>
-                        @error('site_name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <div class="alert alert-info py-2 small">
+                        網站名稱、描述、關鍵字、Logo 等已整合至
+                        <a href="{{ route('admin.seo.settings') }}">SEO 管理 → 網站設定</a>，請於該處設定（前台實際讀取該來源）。
                     </div>
 
                     <div class="mb-3">
-                        <label for="site_description" class="form-label">網站描述</label>
-                        <textarea class="form-control @error('site_description') is-invalid @enderror"
-                                  id="site_description"
-                                  name="site_description"
-                                  rows="3">{{ old('site_description', setting('site_description', '')) }}</textarea>
-                        <div class="form-text">用於首頁 Meta 描述，建議 160 字元以內</div>
-                        @error('site_description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="site_keywords" class="form-label">網站關鍵字</label>
-                        <input type="text"
-                               class="form-control @error('site_keywords') is-invalid @enderror"
-                               id="site_keywords"
-                               name="site_keywords"
-                               value="{{ old('site_keywords', setting('site_keywords', '')) }}">
-                        <div class="form-text">多個關鍵字用逗號分隔</div>
-                        @error('site_keywords')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="site_url" class="form-label">網站網址</label>
-                            <input type="url"
-                                   class="form-control @error('site_url') is-invalid @enderror"
-                                   id="site_url"
-                                   name="site_url"
-                                   value="{{ old('site_url', setting('site_url', url('/'))) }}">
-                            @error('site_url')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="admin_email" class="form-label">管理員 Email</label>
-                            <input type="email"
-                                   class="form-control @error('admin_email') is-invalid @enderror"
-                                   id="admin_email"
-                                   name="admin_email"
-                                   value="{{ old('admin_email', setting('admin_email', '')) }}">
-                            @error('admin_email')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="site_logo" class="form-label">網站 Logo</label>
-                        @if(setting('site_logo'))
-                        <div class="mb-2">
-                            <img src="{{ setting('site_logo') }}" alt="Logo" style="max-height: 60px;">
-                        </div>
-                        @endif
-                        <input type="file"
-                               class="form-control @error('site_logo') is-invalid @enderror"
-                               id="site_logo"
-                               name="site_logo"
-                               accept="image/*">
-                        <div class="form-text">建議尺寸 200x60 像素，格式 PNG</div>
-                        @error('site_logo')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="site_favicon" class="form-label">網站 Favicon</label>
-                        @if(setting('site_favicon'))
-                        <div class="mb-2">
-                            <img src="{{ setting('site_favicon') }}" alt="Favicon" style="max-height: 32px;">
-                        </div>
-                        @endif
-                        <input type="file"
-                               class="form-control @error('site_favicon') is-invalid @enderror"
-                               id="site_favicon"
-                               name="site_favicon"
-                               accept="image/*">
-                        <div class="form-text">建議尺寸 32x32 或 64x64 像素，格式 ICO 或 PNG</div>
-                        @error('site_favicon')
+                        <label for="admin_email" class="form-label">管理員 Email</label>
+                        <input type="email"
+                               class="form-control @error('admin_email') is-invalid @enderror"
+                               id="admin_email"
+                               name="admin_email"
+                               value="{{ old('admin_email', setting('admin_email', '')) }}">
+                        <div class="form-text">系統通知、聯絡表單等寄送對象。</div>
+                        @error('admin_email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -371,10 +290,13 @@
 @push('scripts')
 <script>
     function clearCache() {
-        if (confirm('確定要清除所有快取嗎？')) {
-            // 實作清除快取邏輯
-            alert('快取清除功能待實作');
-        }
+        if (!confirm('確定要清除所有快取嗎？')) return;
+        var f = document.createElement('form');
+        f.method = 'POST';
+        f.action = '{{ route("admin.settings.clear-cache") }}';
+        f.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}">';
+        document.body.appendChild(f);
+        f.submit();
     }
 </script>
 @endpush

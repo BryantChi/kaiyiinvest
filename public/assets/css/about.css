@@ -29,7 +29,7 @@
 }
 
 .page-header-content h1 {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(2rem, 3.5vw + 1rem, 3.75rem);
     margin-bottom: 1rem;
 }
@@ -84,7 +84,7 @@
 }
 
 .content-text h2 {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: clamp(1.6rem, 2vw + 0.75rem, 2.5rem);
     margin-bottom: 1.5rem;
 }
@@ -141,7 +141,7 @@
 }
 
 .stat-number {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 2.5rem;
     color: var(--gold);
     font-weight: 700;
@@ -314,7 +314,7 @@
 
 /* 年份標籤 */
 .timeline-year {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     color: var(--gold);
     font-weight: 700;
@@ -644,7 +644,7 @@
 }
 
 .philosophy-key {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-weight: 700;
     color: var(--charcoal);
     min-width: 3.5em;
@@ -711,7 +711,7 @@
 }
 
 .value-name {
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     font-size: 1.15rem;
     color: var(--gold);
     font-weight: 700;

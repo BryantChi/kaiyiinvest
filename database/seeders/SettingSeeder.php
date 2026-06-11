@@ -14,33 +14,7 @@ class SettingSeeder extends Seeder
     {
         $settings = [
             // 一般設定
-            [
-                'group' => 'general',
-                'key' => 'site_name',
-                'value' => config('app.name'),
-                'type' => 'string',
-                'description' => '網站名稱',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'general',
-                'key' => 'site_description',
-                'value' => '一個通用的後台管理系統',
-                'type' => 'string',
-                'description' => '網站描述',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'general',
-                'key' => 'site_keywords',
-                'value' => 'laravel, admin, cms',
-                'type' => 'string',
-                'description' => '網站關鍵字',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
+            // 網站名稱/描述/關鍵字改由 SEO 網站設定（seo.*）單一管理，一般設定不再重複。
             [
                 'group' => 'general',
                 'key' => 'admin_email',
@@ -78,52 +52,9 @@ class SettingSeeder extends Seeder
                 'is_editable' => true,
             ],
 
-            // SEO 設定
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_title',
-                'value' => config('app.name'),
-                'type' => 'string',
-                'description' => 'SEO 預設標題',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_description',
-                'value' => '一個通用的後台管理系統',
-                'type' => 'string',
-                'description' => 'SEO 預設描述',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_default_keywords',
-                'value' => 'laravel, admin, cms',
-                'type' => 'string',
-                'description' => 'SEO 預設關鍵字',
-                'is_public' => true,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_sitemap_enabled',
-                'value' => 'true',
-                'type' => 'boolean',
-                'description' => '啟用 Sitemap',
-                'is_public' => false,
-                'is_editable' => true,
-            ],
-            [
-                'group' => 'seo',
-                'key' => 'seo_robots_enabled',
-                'value' => 'true',
-                'type' => 'boolean',
-                'description' => '啟用 Robots.txt',
-                'is_public' => false,
-                'is_editable' => true,
-            ],
+            // SEO 設定：改由專屬的 SeoSeeder 負責（group 'seo'，key 形如 seo.xxx，
+            // 對齊 App\Support\Seo 與後台「SEO 管理 → 網站設定」實際讀寫的 key）。
+            // 原本此處的 seo_* 底線 key 程式讀不到，已移除避免雙軌與混淆。
 
             // 分析設定
             [
@@ -205,7 +136,8 @@ class SettingSeeder extends Seeder
         ];
 
         foreach ($settings as $setting) {
-            Setting::create($setting);
+            // firstOrCreate：設定已存在則保留後台修改值，不覆寫；僅補建缺少的設定
+            Setting::firstOrCreate(['key' => $setting['key']], $setting);
         }
 
         $this->command->info('系統設定已建立完成');

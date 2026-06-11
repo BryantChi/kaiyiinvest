@@ -87,30 +87,6 @@ body::after {
     ) !important;
 }
 
-/* Hero 區塊底部柔和漸層 */
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(
-        to top,
-        rgba(248, 246, 240, 1) 0%,
-        rgba(248, 246, 240, 0.95) 10%,
-        rgba(248, 246, 240, 0.85) 20%,
-        rgba(248, 246, 240, 0.7) 35%,
-        rgba(248, 246, 240, 0.5) 50%,
-        rgba(248, 246, 240, 0.3) 65%,
-        rgba(248, 246, 240, 0.15) 80%,
-        rgba(248, 246, 240, 0.05) 90%,
-        rgba(248, 246, 240, 0) 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-}
-
 .hero-content {
     z-index: 2;
 }
@@ -464,5 +440,211 @@ body::after {
     .section-subtitle::before,
     .section-subtitle::after {
         display: none;
+    }
+}
+
+/* =====================================================================
+   多語系字級協調 + RWD 防裁切／防貼邊（中／英／越通用，未來語言自動適用）
+   置於 enhancements.css 末段，載入順序最後 → 覆蓋各頁 page css。
+   解法核心：
+   1) Hero/標題字級下限調小，越南／英文長字在手機少斷行、不過大；
+   2) Hero 改 min-height 並預留導覽列高度，內容過高時自然延展、不被固定列裁切；
+   3) 內頁標題列補左右留白，副標不再貼邊；
+   4) 全面 overflow-wrap/break-word，未來任何長字語系都不溢出。
+   ===================================================================== */
+:root {
+    --nav-h: 78px; /* 桌機／平板固定導覽列實際高度，供 hero / 內頁標題對齊（避免縫隙或重疊）*/
+}
+
+/* ≤480px 時 main.css 把 .nav-container padding 由 0.7rem 加大為 1rem，
+   導覽列高度 78→88px，對應加大預留高度（481px 以上維持 78px）*/
+@media (max-width: 480px) {
+    :root {
+        --nav-h: 88px;
+    }
+}
+
+/* logo 副標一律單行：避免窄橫向（約 1025–1100px）或長字語系把導覽列撐高 */
+.logo-sub {
+    white-space: nowrap;
+}
+
+/* ---- 首頁 Hero：避免長字語系把標題撐高被導覽列裁切，且整體不過大 ---- */
+.hero {
+    height: auto;
+    min-height: 100svh;
+    padding-top: calc(var(--nav-h) + 1rem);
+    padding-bottom: 2.5rem;
+}
+
+.hero-title {
+    /* 桌機再下修一級：上限 4rem→3.4rem，斜率 3vw→2.6vw */
+    font-size: clamp(1.7rem, 1rem + 2.6vw, 3.4rem);
+    line-height: 1.2;
+    /* 只在必要時換行於「字與字之間」，不從字中硬切（避免越南文單字被切斷）；
+       text-wrap: balance 讓各行長度平均，斷行更自然 */
+    overflow-wrap: break-word;
+    text-wrap: balance;
+}
+
+.hero-subtitle {
+    font-size: clamp(0.95rem, 0.6rem + 1.1vw, 1.3rem);
+    overflow-wrap: break-word;
+}
+
+/* 越南文 hero 標題：桌機（非漢堡選單）讓 <br> 分隔的兩段各自不換行，
+   像中文一樣穩定兩行；字級上限收到能容下最長那段（約 33 字）的大小 */
+@media (min-width: 1025px) {
+    html[lang="vi"] .hero-title {
+        font-size: clamp(2.2rem, 1.2rem + 1.6vw, 3rem);
+        white-space: nowrap;
+    }
+}
+
+/* ---- 內頁標題列：補左右留白（副標不再貼邊）＋字級協調 ---- */
+.page-header {
+    margin-top: var(--nav-h); /* 標題列起點落在導覽列下方，避免被固定列壓住 */
+}
+
+.page-header-content {
+    width: 100%;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.page-header-content h1 {
+    /* 統一各頁標題為金色（about 原繼承白色，與其他頁不一致）*/
+    color: var(--gold);
+    font-size: clamp(1.85rem, 1rem + 3.2vw, 3.5rem);
+    line-height: 1.25;
+    /* 同 hero：不從字中硬切，避免越南文單字被切斷 */
+    overflow-wrap: break-word;
+    text-wrap: balance;
+}
+
+.page-header-content p {
+    font-size: clamp(0.95rem, 0.6rem + 1vw, 1.2rem);
+    line-height: 1.6;
+    overflow-wrap: break-word;
+}
+
+/* ---- 手機進一步收斂，確保三語都不過大、不被裁 ---- */
+@media (max-width: 480px) {
+    .hero-title {
+        /* 手機再下修一級，與全域一致縮小 */
+        font-size: clamp(1.6rem, 6vw, 2.3rem);
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.88rem, 3.4vw, 1.1rem);
+    }
+
+    .page-header-content {
+        padding-left: 1.1rem;
+        padding-right: 1.1rem;
+    }
+
+    .page-header-content h1 {
+        font-size: clamp(1.6rem, 6vw, 2.3rem);
+    }
+}
+
+/* =====================================================================
+   平板導覽列（769–1024px）改用漢堡抽屜
+   原本 ≤768 才收合，但越南文／英文選單較長，在 769–1024 會於項目內斷行、
+   把固定導覽列撐高甚至壓住內容。此處將抽屜模式延伸到 1024px，
+   三語一致、未來語言也安全。JS 斷點(main.js MOBILE_NAV_MAX)須同步為 1024。
+   ===================================================================== */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        flex-direction: column;
+        background: rgba(10, 10, 10, 0.98);
+        width: 100%;
+        padding: 0 2rem;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+
+    .nav-menu > li {
+        width: 100%;
+        border-bottom: 1px solid rgba(201, 169, 97, 0.2);
+    }
+
+    .nav-link {
+        padding: 1rem 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .lang-switcher > .nav-link {
+        justify-content: flex-start;
+    }
+
+    .lang-switcher > .nav-link .dropdown-icon {
+        margin-left: auto;
+    }
+
+    .dropdown-menu {
+        position: static;
+        transform: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        min-width: 0;
+        opacity: 1;
+        visibility: visible;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .nav-menu > li.dropdown-active .dropdown-menu {
+        max-height: 400px;
+    }
+
+    .dropdown-menu::before {
+        display: none;
+    }
+
+    .dropdown-item {
+        padding: 0.85rem 1rem 0.85rem 2rem;
+        border-left: none;
+        background: rgba(201, 169, 97, 0.05);
+    }
+
+    .nav-menu.active {
+        max-height: calc(100dvh - 64px);
+        padding: 2rem;
+        overflow-y: auto;
+    }
+
+    .mobile-toggle {
+        display: flex;
+    }
+}
+
+/* ---- 筆電橫向選單（1025–1439px）縮字級＋不換行：越南文／英文長選單單行容納 ---- */
+@media (min-width: 1025px) and (max-width: 1439px) {
+    .nav-menu {
+        gap: 1.3rem;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        white-space: nowrap;
     }
 }

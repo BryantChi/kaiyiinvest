@@ -14,20 +14,25 @@ class AdminUserSeeder extends Seeder
     public function run(): void
     {
         // 建立工程師帳號（最高權限；id=1 Bryant 預設為 engineer 角色）
-        $engineer = User::create([
-            'name' => 'Bryant',
-            'email' => 'bryantchi.work@gmail.com',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        // firstOrCreate：帳號已存在則保留既有密碼/資料，不覆寫；assignRole 對既有角色冪等
+        $engineer = User::firstOrCreate(
+            ['email' => 'bryantchi.work@gmail.com'],
+            [
+                'name' => 'Bryant',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
         $engineer->assignRole(User::ENGINEER_ROLE);
         // 建立超級管理員
-        $superAdmin = User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'email_verified_at' => now(),
-        ]);
+        $superAdmin = User::firstOrCreate(
+            ['email' => 'admin@example.com'],
+            [
+                'name' => 'Super Admin',
+                'password' => Hash::make('password'),
+                'email_verified_at' => now(),
+            ]
+        );
         $superAdmin->assignRole('super-admin');
 
         $this->command->info('超級管理員已建立');
@@ -38,30 +43,24 @@ class AdminUserSeeder extends Seeder
         // 建立測試用戶 (可選)
         if (app()->environment('local')) {
             // 管理員
-            $admin = User::create([
-                'name' => 'Admin User',
-                'email' => 'admin-user@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
+            $admin = User::firstOrCreate(
+                ['email' => 'admin-user@example.com'],
+                ['name' => 'Admin User', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+            );
             $admin->assignRole('admin');
 
             // 編輯
-            $editor = User::create([
-                'name' => 'Editor User',
-                'email' => 'editor@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
+            $editor = User::firstOrCreate(
+                ['email' => 'editor@example.com'],
+                ['name' => 'Editor User', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+            );
             $editor->assignRole('editor');
 
             // 作者
-            $author = User::create([
-                'name' => 'Author User',
-                'email' => 'author@example.com',
-                'password' => Hash::make('password'),
-                'email_verified_at' => now(),
-            ]);
+            $author = User::firstOrCreate(
+                ['email' => 'author@example.com'],
+                ['name' => 'Author User', 'password' => Hash::make('password'), 'email_verified_at' => now()]
+            );
             $author->assignRole('author');
 
             $this->command->info('測試用戶已建立 (僅限本地環境)');

@@ -42,12 +42,12 @@
                                 name="mail_driver"
                                 onchange="toggleMailSettings(this.value)"
                                 required>
-                            <option value="smtp" {{ old('mail_driver', env('MAIL_MAILER', 'smtp')) == 'smtp' ? 'selected' : '' }}>SMTP</option>
-                            <option value="sendmail" {{ old('mail_driver', env('MAIL_MAILER')) == 'sendmail' ? 'selected' : '' }}>Sendmail</option>
-                            <option value="mailgun" {{ old('mail_driver', env('MAIL_MAILER')) == 'mailgun' ? 'selected' : '' }}>Mailgun</option>
-                            <option value="ses" {{ old('mail_driver', env('MAIL_MAILER')) == 'ses' ? 'selected' : '' }}>Amazon SES</option>
-                            <option value="postmark" {{ old('mail_driver', env('MAIL_MAILER')) == 'postmark' ? 'selected' : '' }}>Postmark</option>
-                            <option value="log" {{ old('mail_driver', env('MAIL_MAILER')) == 'log' ? 'selected' : '' }}>Log (測試)</option>
+                            <option value="smtp" {{ old('mail_driver', $settings['mail_driver'] ?? 'smtp') == 'smtp' ? 'selected' : '' }}>SMTP</option>
+                            <option value="sendmail" {{ old('mail_driver', $settings['mail_driver'] ?? '') == 'sendmail' ? 'selected' : '' }}>Sendmail</option>
+                            <option value="mailgun" {{ old('mail_driver', $settings['mail_driver'] ?? '') == 'mailgun' ? 'selected' : '' }}>Mailgun</option>
+                            <option value="ses" {{ old('mail_driver', $settings['mail_driver'] ?? '') == 'ses' ? 'selected' : '' }}>Amazon SES</option>
+                            <option value="postmark" {{ old('mail_driver', $settings['mail_driver'] ?? '') == 'postmark' ? 'selected' : '' }}>Postmark</option>
+                            <option value="log" {{ old('mail_driver', $settings['mail_driver'] ?? '') == 'log' ? 'selected' : '' }}>Log (測試)</option>
                         </select>
                         @error('mail_driver')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -63,7 +63,7 @@
                                        class="form-control @error('mail_host') is-invalid @enderror"
                                        id="mail_host"
                                        name="mail_host"
-                                       value="{{ old('mail_host', env('MAIL_HOST', '')) }}"
+                                       value="{{ old('mail_host', $settings['mail_host'] ?? '') }}"
                                        placeholder="例如: smtp.gmail.com">
                                 @error('mail_host')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -76,7 +76,7 @@
                                        class="form-control @error('mail_port') is-invalid @enderror"
                                        id="mail_port"
                                        name="mail_port"
-                                       value="{{ old('mail_port', env('MAIL_PORT', 587)) }}"
+                                       value="{{ old('mail_port', $settings['mail_port'] ?? 587) }}"
                                        placeholder="587">
                                 @error('mail_port')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -90,7 +90,7 @@
                                    class="form-control @error('mail_username') is-invalid @enderror"
                                    id="mail_username"
                                    name="mail_username"
-                                   value="{{ old('mail_username', env('MAIL_USERNAME', '')) }}">
+                                   value="{{ old('mail_username', $settings['mail_username'] ?? '') }}">
                             @error('mail_username')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -102,7 +102,7 @@
                                    class="form-control @error('mail_password') is-invalid @enderror"
                                    id="mail_password"
                                    name="mail_password"
-                                   value="{{ old('mail_password', env('MAIL_PASSWORD', '')) }}"
+                                   value="{{ old('mail_password', $settings['mail_password'] ?? '') }}"
                                    placeholder="留空表示不修改">
                             @error('mail_password')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -114,9 +114,9 @@
                             <select class="form-select @error('mail_encryption') is-invalid @enderror"
                                     id="mail_encryption"
                                     name="mail_encryption">
-                                <option value="tls" {{ old('mail_encryption', env('MAIL_ENCRYPTION', 'tls')) == 'tls' ? 'selected' : '' }}>TLS</option>
-                                <option value="ssl" {{ old('mail_encryption', env('MAIL_ENCRYPTION')) == 'ssl' ? 'selected' : '' }}>SSL</option>
-                                <option value="" {{ old('mail_encryption', env('MAIL_ENCRYPTION')) == '' ? 'selected' : '' }}>無</option>
+                                <option value="tls" {{ old('mail_encryption', $settings['mail_encryption'] ?? 'tls') == 'tls' ? 'selected' : '' }}>TLS</option>
+                                <option value="ssl" {{ old('mail_encryption', $settings['mail_encryption'] ?? '') == 'ssl' ? 'selected' : '' }}>SSL</option>
+                                <option value="" {{ old('mail_encryption', $settings['mail_encryption'] ?? '') == '' ? 'selected' : '' }}>無</option>
                             </select>
                             @error('mail_encryption')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -132,7 +132,7 @@
                                    class="form-control"
                                    id="mailgun_domain"
                                    name="mailgun_domain"
-                                   value="{{ old('mailgun_domain', env('MAILGUN_DOMAIN', '')) }}">
+                                   value="{{ old('mailgun_domain', $settings['mailgun_domain'] ?? '') }}">
                         </div>
 
                         <div class="mb-3">
@@ -141,7 +141,7 @@
                                    class="form-control"
                                    id="mailgun_secret"
                                    name="mailgun_secret"
-                                   value="{{ old('mailgun_secret', env('MAILGUN_SECRET', '')) }}"
+                                   value="{{ old('mailgun_secret', $settings['mailgun_secret'] ?? '') }}"
                                    placeholder="留空表示不修改">
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                    class="form-control"
                                    id="ses_key"
                                    name="ses_key"
-                                   value="{{ old('ses_key', env('AWS_ACCESS_KEY_ID', '')) }}">
+                                   value="{{ old('ses_key', $settings['ses_key'] ?? '') }}">
                         </div>
 
                         <div class="mb-3">
@@ -163,17 +163,17 @@
                                    class="form-control"
                                    id="ses_secret"
                                    name="ses_secret"
-                                   value="{{ old('ses_secret', env('AWS_SECRET_ACCESS_KEY', '')) }}"
+                                   value="{{ old('ses_secret', $settings['ses_secret'] ?? '') }}"
                                    placeholder="留空表示不修改">
                         </div>
 
                         <div class="mb-3">
                             <label for="ses_region" class="form-label">AWS Region</label>
                             <select class="form-select" id="ses_region" name="ses_region">
-                                <option value="us-east-1" {{ old('ses_region', env('AWS_DEFAULT_REGION', 'us-east-1')) == 'us-east-1' ? 'selected' : '' }}>美國東部 (維吉尼亞)</option>
-                                <option value="us-west-2" {{ old('ses_region', env('AWS_DEFAULT_REGION')) == 'us-west-2' ? 'selected' : '' }}>美國西部 (俄勒岡)</option>
-                                <option value="eu-west-1" {{ old('ses_region', env('AWS_DEFAULT_REGION')) == 'eu-west-1' ? 'selected' : '' }}>歐洲 (愛爾蘭)</option>
-                                <option value="ap-southeast-1" {{ old('ses_region', env('AWS_DEFAULT_REGION')) == 'ap-southeast-1' ? 'selected' : '' }}>亞太 (新加坡)</option>
+                                <option value="us-east-1" {{ old('ses_region', $settings['ses_region'] ?? 'us-east-1') == 'us-east-1' ? 'selected' : '' }}>美國東部 (維吉尼亞)</option>
+                                <option value="us-west-2" {{ old('ses_region', $settings['ses_region'] ?? '') == 'us-west-2' ? 'selected' : '' }}>美國西部 (俄勒岡)</option>
+                                <option value="eu-west-1" {{ old('ses_region', $settings['ses_region'] ?? '') == 'eu-west-1' ? 'selected' : '' }}>歐洲 (愛爾蘭)</option>
+                                <option value="ap-southeast-1" {{ old('ses_region', $settings['ses_region'] ?? '') == 'ap-southeast-1' ? 'selected' : '' }}>亞太 (新加坡)</option>
                             </select>
                         </div>
                     </div>
@@ -191,7 +191,7 @@
                                class="form-control @error('mail_from_name') is-invalid @enderror"
                                id="mail_from_name"
                                name="mail_from_name"
-                               value="{{ old('mail_from_name', env('MAIL_FROM_NAME', config('app.name'))) }}"
+                               value="{{ old('mail_from_name', $settings['mail_from_name'] ?? config('app.name')) }}"
                                required>
                         @error('mail_from_name')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -204,7 +204,7 @@
                                class="form-control @error('mail_from_address') is-invalid @enderror"
                                id="mail_from_address"
                                name="mail_from_address"
-                               value="{{ old('mail_from_address', env('MAIL_FROM_ADDRESS', '')) }}"
+                               value="{{ old('mail_from_address', $settings['mail_from_address'] ?? '') }}"
                                required>
                         @error('mail_from_address')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -410,10 +410,15 @@
 
     function testMail() {
         const email = prompt('請輸入測試郵件地址：');
-        if (email) {
-            // 實作發送測試郵件邏輯
-            alert('測試郵件發送功能待實作，將發送至：' + email);
-        }
+        if (!email) return;
+        var f = document.createElement('form');
+        f.method = 'POST';
+        f.action = '{{ route("admin.settings.mail.test") }}';
+        f.innerHTML = '<input type="hidden" name="_token" value="{{ csrf_token() }}">'
+            + '<input type="hidden" name="email">';
+        f.querySelector('[name=email]').value = email;
+        document.body.appendChild(f);
+        f.submit();
     }
 
     // 頁面載入時初始化

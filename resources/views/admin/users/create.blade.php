@@ -104,6 +104,21 @@
             </div>
 
             <div class="card mt-3">
+                <div class="card-header">
+                    <strong>帳號狀態</strong>
+                </div>
+                <div class="card-body">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox"
+                               id="is_active" name="is_active" value="1"
+                               {{ old('is_active', '1') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="is_active">啟用此帳號</label>
+                    </div>
+                    <div class="form-text">停用後將無法登入。</div>
+                </div>
+            </div>
+
+            <div class="card mt-3">
                 <div class="card-body">
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">

@@ -20,6 +20,14 @@ class ContactController extends Controller
 
     public function store(StoreContactRequest $request): RedirectResponse
     {
+        // 蜜罐：正常使用者不會填隱藏的 website 欄位；有值即視為機器人灌水，
+        // 靜默回應成功（不入庫、不寄信、不顯示錯誤，避免讓 bot 察覺被擋）。
+        if ($request->filled('website')) {
+            return redirect()
+                ->back()
+                ->with('success', __('感謝您的來信，我們將盡快與您聯繫。'));
+        }
+
         $contact = Contact::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),

@@ -157,27 +157,33 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ active_route('admin.seo.settings') }}" href="{{ route('admin.seo.settings') }}">
+                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                    網站設定
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ active_route('admin.seo.pages') }}" href="{{ route('admin.seo.pages') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
                     頁面 SEO
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.seo.meta') }}" href="{{ route('admin.seo.meta') }}">
+                <a class="nav-link {{ active_route('admin.seo.sitemap') }}" href="{{ route('admin.seo.sitemap') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Meta 管理
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.seo.sitemap-settings') }}" href="{{ route('admin.seo.sitemap-settings') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Sitemap 設定
+                    Sitemap
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ active_route('admin.seo.robots-txt') }}" href="{{ route('admin.seo.robots-txt') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    Robots.txt
+                    robots.txt
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ active_route('admin.seo.llms-txt') }}" href="{{ route('admin.seo.llms-txt') }}">
+                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                    llms.txt
                 </a>
             </li>
             <li class="nav-item">
@@ -212,18 +218,6 @@
                 <a class="nav-link {{ active_route('admin.settings.general') }}" href="{{ route('admin.settings.general') }}">
                     <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
                     一般設定
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.settings.seo') }}" href="{{ route('admin.settings.seo') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    SEO 設定
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ active_route('admin.settings.analytics') }}" href="{{ route('admin.settings.analytics') }}">
-                    <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
-                    分析設定
                 </a>
             </li>
             <li class="nav-item">
@@ -262,3 +256,34 @@
 <div class="sidebar-footer">
     <button class="sidebar-toggler" type="button"></button>
 </div>
+
+{{-- 自動捲動側邊欄至目前頁面對應的項目（並展開其所在群組） --}}
+<script>
+(function () {
+    function focusActive() {
+        var active = document.querySelector('.sidebar-nav .nav-link.active');
+        if (!active) return;
+
+        // 展開所在的 nav-group（SEO / 系統設定等）
+        var group = active.closest('.nav-group');
+        if (group) group.classList.add('show');
+
+        // 找最近的可捲動祖先（simplebar 包裝層或 sidebar 本身）
+        var el = active.parentElement, scroller = null;
+        while (el && el !== document.body) {
+            var oy = getComputedStyle(el).overflowY;
+            if ((oy === 'auto' || oy === 'scroll') && el.scrollHeight > el.clientHeight + 4) { scroller = el; break; }
+            el = el.parentElement;
+        }
+        if (!scroller) return;
+
+        var sRect = scroller.getBoundingClientRect();
+        var aRect = active.getBoundingClientRect();
+        // 已在可視範圍內就不動
+        if (aRect.top >= sRect.top && aRect.bottom <= sRect.bottom) return;
+        scroller.scrollTop += (aRect.top - sRect.top) - (scroller.clientHeight / 2) + (aRect.height / 2);
+    }
+    // 等 simplebar 初始化與群組展開後再捲動
+    window.addEventListener('load', function () { setTimeout(focusActive, 150); });
+})();
+</script>

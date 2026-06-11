@@ -12,7 +12,7 @@
 @section('twitter_description', '聯絡楷懿國際投資 — 越南河內、海防據點，台灣／越南聯絡電話與 Email。')
 
 @push('page-css')
-    <link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}?v=20260605">
+    <link rel="stylesheet" href="{{ asset('assets/css/contact.css') }}?v=20260610">
 @endpush
 
 @section('content')
@@ -58,7 +58,7 @@
                         </div>
                         <div class="info-content">
                             <h4>{{ cb('contact','info.phone_label') }}</h4>
-                            <p>台灣 <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_tw')) }}">{{ cb('global','contact.phone_tw') }}</a><br>越南 <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_vn')) }}">{{ cb('global','contact.phone_vn') }}</a></p>
+                            <p>{{ cb('global','contact.label_tw') }} <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_tw')) }}">{{ cb('global','contact.phone_tw') }}</a><br>{{ cb('global','contact.label_vn') }} <a href="tel:{{ preg_replace('/[^0-9+]/', '', cb('global','contact.phone_vn')) }}">{{ cb('global','contact.phone_vn') }}</a></p>
                         </div>
                     </div>
 
@@ -109,38 +109,44 @@
                     @endif
                     <form class="contact-form" id="contactForm" method="POST" action="{{ localized_route('frontend.contact.store') }}">
                         @csrf
+                        {{-- 蜜罐：人類看不到也不會填；機器人常自動填入。後端偵測到有值即視為灌水並靜默丟棄 --}}
+                        <div style="position:absolute; left:-9999px; top:-9999px;" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
                         <div class="form-group">
-                            <label for="name">姓名 *</label>
+                            <label for="name">{{ cb('contact', 'form.name_label') }} *</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="email">電子郵件 *</label>
+                                <label for="email">{{ cb('contact', 'form.email_label') }} *</label>
                                 <input type="email" id="email" name="email" value="{{ old('email') }}" required>
                             </div>
                             <div class="form-group">
-                                <label for="phone">聯絡電話</label>
+                                <label for="phone">{{ cb('contact', 'form.phone_label') }}</label>
                                 <input type="tel" id="phone" name="phone" value="{{ old('phone') }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="subject">主旨 *</label>
+                            <label for="subject">{{ cb('contact', 'form.subject_label') }} *</label>
                             <select id="subject" name="subject" required>
-                                <option value="">請選擇諮詢主題</option>
-                                @foreach(['不動產代理' => '不動產代理項目', '工業地產' => '工業地產', '專業諮詢' => '專業諮詢', '其他服務' => '其他服務', '一般詢問' => '一般詢問'] as $val => $label)
-                                <option value="{{ $val }}" {{ old('subject') === $val ? 'selected' : '' }}>{{ $label }}</option>
+                                <option value="">{{ cb('contact', 'form.subject_placeholder') }}</option>
+                                {{-- 鍵=送出/儲存的值（保持中文不變，避免影響既有資料與信件）；值=顯示用的 cb key（多語） --}}
+                                @foreach(['不動產代理' => 'form.opt_real_estate', '工業地產' => 'form.opt_industrial', '專業諮詢' => 'form.opt_consulting', '其他服務' => 'form.opt_other', '一般詢問' => 'form.opt_general'] as $val => $optKey)
+                                <option value="{{ $val }}" {{ old('subject') === $val ? 'selected' : '' }}>{{ cb('contact', $optKey) }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="message">訊息內容 *</label>
+                            <label for="message">{{ cb('contact', 'form.message_label') }} *</label>
                             <textarea id="message" name="message" rows="6" required>{{ old('message') }}</textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-lg">送出訊息</button>
+                        <button type="submit" class="btn btn-primary btn-lg">{{ cb('contact', 'form.submit') }}</button>
                     </form>
                 </div>
             </div>
@@ -172,85 +178,3 @@
     <script src="{{ asset('assets/js/contact.js') }}?v=20260605"></script>
 @endpush
 
-@push('structured-data')
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "RealEstateAgent",
-      "@id": "https://kaiyiinvest.com/#organization",
-      "name": "楷懿國際投資",
-      "alternateName": "Kaiyi International Investment",
-      "url": "https://kaiyiinvest.com/",
-      "logo": "https://kaiyiinvest.com/assets/img/logo/logo.png",
-      "image": "https://kaiyiinvest.com/assets/img/logo/logo.png",
-      "email": "kaiyiinvest@gmail.com",
-      "description": "楷懿國際投資專注工業地產、不動產代理與專業諮詢，深耕越南河內、海防市場，提供工業區開發招商、包租代管與跨國不動產投資服務。",
-      "telephone": [
-        "+886987773519",
-        "+84768168989"
-      ],
-      "areaServed": [
-        {
-          "@type": "Country",
-          "name": "Vietnam"
-        },
-        {
-          "@type": "Country",
-          "name": "Taiwan"
-        }
-      ],
-      "address": [
-        {
-          "@type": "PostalAddress",
-          "streetAddress": "SB01-SP.02-18, Sao Bien Subdivision, Vinhomes Ocean Park Urban Area",
-          "addressLocality": "Gia Lam, Hanoi",
-          "addressCountry": "VN"
-        },
-        {
-          "@type": "PostalAddress",
-          "streetAddress": "So 449, Vo Nguyen Giap, Phuong Kenh Duong, Quan Le Chan",
-          "addressLocality": "Hai Phong",
-          "addressCountry": "VN"
-        }
-      ],
-      "hasMap": [
-        "https://maps.app.goo.gl/UH9iwxsFqonbLx2D8?g_st=il",
-        "https://maps.app.goo.gl/1r2e87E8h971Kisu7?g_st=il"
-      ],
-      "sameAs": []
-    }
-    </script>
-    <!-- sameAs 待業主提供 FB / IG / Google 商家網址後填入；查無公開檔案，勿編造 -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "首頁",
-          "item": "https://kaiyiinvest.com/index.html"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "聯絡我們",
-          "item": "https://kaiyiinvest.com/contact.html"
-        }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      "url": "https://kaiyiinvest.com/contact.html",
-      "name": "聯絡我們 | 楷懿國際投資",
-      "inLanguage": "zh-TW",
-      "about": {
-        "@id": "https://kaiyiinvest.com/#organization"
-      }
-    }
-    </script>
-@endpush

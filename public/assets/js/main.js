@@ -1,21 +1,43 @@
 // Kaiyi International - Main JavaScript
 
-// Page Loader
-window.addEventListener('load', () => {
+// Page Loader：DOM 準備好即淡出，不等 hero 影片等重資產（避免遮罩卡住整頁）
+function hidePageLoader() {
     const loader = document.querySelector('.page-loader');
-    if (loader) {
-        // 最少顯示 500ms 確保載入動畫被看到
+    if (!loader) return;
+    // 最少顯示 500ms 確保載入動畫被看到
+    setTimeout(() => {
+        loader.classList.add('fade-out');
+        // 動畫結束後移除元素
         setTimeout(() => {
-            loader.classList.add('fade-out');
-            // 動畫結束後移除元素
-            setTimeout(() => {
-                loader.style.display = 'none';
-            }, 500);
+            loader.style.display = 'none';
         }, 500);
-    }
-});
+    }, 500);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', hidePageLoader);
+} else {
+    hidePageLoader();
+}
+
+// 動態同步固定導覽列實際高度到 --nav-h（CSS 寫死 78/88px 會因語系、字體載入、視窗寬度對不上而產生縫隙）
+function syncNavHeight() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    document.documentElement.style.setProperty('--nav-h', navbar.offsetHeight + 'px');
+}
+
+syncNavHeight();
+window.addEventListener('load', syncNavHeight); // 字體載入後高度可能改變
+window.addEventListener('resize', syncNavHeight);
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(syncNavHeight);
+}
 
 // Mobile Menu Toggle
+// 漢堡選單斷點：須與 enhancements.css 的 max-width:1024px 保持一致
+// （長字語系如越南文／英文在平板寬度會撐破橫向選單，故 ≤1024 一律用抽屜）
+const MOBILE_NAV_MAX = 1024;
 const mobileToggle = document.getElementById('mobileToggle');
 const navMenu = document.getElementById('navMenu');
 
@@ -33,8 +55,8 @@ navLinks.forEach(li => {
 
     if (dropdown && link) {
         link.addEventListener('click', (e) => {
-            // 只在手機版時阻止預設行為
-            if (window.innerWidth <= 768) {
+            // 只在手機／平板（抽屜模式）時阻止預設行為
+            if (window.innerWidth <= MOBILE_NAV_MAX) {
                 e.preventDefault();
                 li.classList.toggle('dropdown-active');
 
@@ -52,7 +74,7 @@ navLinks.forEach(li => {
 // 點擊下拉選單項目後關閉手機選單
 document.querySelectorAll('.dropdown-item').forEach(item => {
     item.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= MOBILE_NAV_MAX) {
             navMenu.classList.remove('active');
             navLinks.forEach(li => li.classList.remove('dropdown-active'));
         }

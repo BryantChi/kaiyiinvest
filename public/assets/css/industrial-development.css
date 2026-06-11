@@ -555,7 +555,7 @@
     font-weight: 700;
     color: white;
     margin-bottom: 20px;
-    font-family: 'Cinzel', serif;
+    font-family: var(--font-display);
     line-height: 1.25;
 }
 

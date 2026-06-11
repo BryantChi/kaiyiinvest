@@ -87,6 +87,7 @@
                         ['clear-cache', '清除所有快取', 'optimize:clear（設定/路由/視圖/快取）', 'btn-outline-secondary', false],
                         ['build-cache', '建立快取（上線最佳化）', 'config/route/view 快取', 'btn-outline-secondary', false],
                         ['migrate', '執行資料庫遷移', 'migrate --force', 'btn-outline-primary', true],
+                        ['seed', '填入初始資料（Seeder）', 'db:seed --force — 僅補建缺少資料，不覆寫既有內容', 'btn-outline-primary', true],
                         ['geoip-update', '更新 GeoIP 資料庫', '下載最新 MaxMind 資料庫（需金鑰）', 'btn-outline-info', false],
                         ['storage-link', '建立 storage 連結', 'storage:link', 'btn-outline-secondary', false],
                     ];
